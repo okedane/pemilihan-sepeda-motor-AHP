@@ -24,6 +24,37 @@
     <!-- App Css-->
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
+
+    <style>
+        body {
+            background-color: #ff0000 !important; /* background merah */
+        }
+
+        .login-wrapper {
+            background-color: #ff0000 !important; /* full merah */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            background-color: #d9d9d9; /* abu seperti gambar */
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        .title-app {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+    </style>
+
+
 </head>
 
 <body>
