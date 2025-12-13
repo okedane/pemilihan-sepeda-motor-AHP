@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penilaian_alternatif_hamas', function (Blueprint $table) {
+        Schema::create('perbandingan_alternatif', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('alternatif_id')->constrained('alternatif_hamas')->onDelete('cascade');
-            $table->foreignId('sub_kriteria_id')->constrained('sub_kriteria_hamas')->onDelete('cascade');
+            $table->foreignId('alternatif_id')->constrained('alternatif')->onDelete('cascade');
+            $table->foreignId('sub_kriteria_id')->constrained('sub_kriteria')->onDelete('cascade');
             $table->float('nilai');
             $table->float('normalisasi', 5, 3)->nullable();
             $table->float('pembobotan', 7,4)->nullable();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penilaian_alternatif_hamas');
+        Schema::dropIfExists('perbandingan_alternatif');
     }
 };
