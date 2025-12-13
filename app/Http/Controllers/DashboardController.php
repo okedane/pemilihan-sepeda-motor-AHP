@@ -8,11 +8,11 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        return view('welcome');
+        return view('admin.index');
     }
 
     public function user(Request $request)
     {
-        return view('user.welcome');
+        return view('petani.index');
     }
 }

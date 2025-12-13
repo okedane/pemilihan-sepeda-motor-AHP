@@ -1,4 +1,5 @@
 <x-app>
+    <x-slot:title>Pemilihan</x-slot:title>
     <div class="page-content">
         <div class="container-fluid">
             <div class="row justify-content-center">

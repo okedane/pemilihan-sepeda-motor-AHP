@@ -1,4 +1,5 @@
 <x-app>
+    <x-slot:title>Manajemen Admin</x-slot:title>
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -60,7 +61,7 @@
 
                                                     <!-- Tombol Delete -->
                                                     <!-- Tombol Delete dengan Modal Konfirmasi -->
-                                                    <form action="{{ route('users.destroy', $item->id) }}"
+                                                    <form action="{{ route('akun.destroy', $item->id) }}"
                                                         method="POST" id="deleteForm{{ $item->id }}">
                                                         @csrf
                                                         @method('DELETE')
@@ -123,7 +124,7 @@
                                                                         aria-label="Close"></button>
                                                                 </div>
                                                                 <form class="needs-validation"
-                                                                    action="{{ route('users.update', $item->id) }}"
+                                                                    action="{{ route('akun.update', $item->id) }}"
                                                                     method="POST" novalidate>
                                                                     @csrf
                                                                     @method('PUT')
@@ -154,8 +155,8 @@
 
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        {{-- <button type="reset" --}}
-                                                                        {{-- class="btn btn-secondary">Reset</button> --}}
+                                                                        <button type="reset"
+                                                                        class="btn btn-secondary">Reset</button>
                                                                         <button type="submit"
                                                                             class="btn btn-primary">Simpan</button>
                                                                     </div>
@@ -196,7 +197,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form class="needs-validation" action="{{ route('users.store') }}"
+                                    <form class="needs-validation" action="{{ route('akun.store') }}"
                                         method="POST" novalidate>
                                         @csrf
                                         <div class="mb-3">

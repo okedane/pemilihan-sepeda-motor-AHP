@@ -1,4 +1,5 @@
 <x-app>
+    <x-slot:title>Matriks Perbandingan Subkriteria</x-slot:title>
     <div class="page-content">
         <div class="container-fluid">
 

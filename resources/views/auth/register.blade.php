@@ -1,4 +1,5 @@
 <x-login.layout>
+    <x-slot:title>Register</x-slot:title>
     <x-toast />
     <div class="d-flex justify-content-center align-items-center min-vh-100">
         <div class="col-xxl-3 col-lg-4 col-md-5">

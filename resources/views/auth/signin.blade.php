@@ -1,4 +1,5 @@
 <x-login.layout>
+    <x-slot:title>LogIn</x-slot:title>
 
     <x-toast />
 

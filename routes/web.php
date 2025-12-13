@@ -17,10 +17,8 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-
 
     Route::middleware(['userAkses:admin'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -46,40 +44,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/penilaian-alternatif', [AlternatifController::class, 'tampilPenilaianAlternatif'])->name('alternatif.penilaian.form');
         Route::post('/penilaian-alternatif', [AlternatifController::class, 'simpanPenilaian'])->name('alternatif.penilaian.simpan');
 
-
-
         // Buatkan route management account
-        Route::get('/management-account', [AdminController::class, 'index'])->name('users.index');
-        Route::post('/management-account', [AdminController::class, 'store'])->name('users.store');
-        Route::put('/management-account/{id}', [AdminController::class, 'update'])->name('users.update');
-        Route::delete('/management-account/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
+        Route::get('/management-account-admin', [AdminController::class, 'admin'])->name('akun.admin');
+        Route::get('/management-account-user', [AdminController::class, 'user'])->name('akun.user');
+        Route::post('/management-account', [AdminController::class, 'store'])->name('akun.store');
+        Route::put('/management-account/{id}', [AdminController::class, 'update'])->name('akun.update');
+        Route::delete('/management-account/{id}', [AdminController::class, 'destroy'])->name('akun.destroy');
     });
 
-
-
-
-    // buatkan route middleware untuk users dan userAkses:admin
-    Route::middleware(['userAkses:admin'])->prefix('admin')->group(function () {
-        Route::get('/', [AdminController::class, 'admin'])->name('admin.admin');
-        Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
-        Route::post('/', [AdminController::class, 'store'])->name('admin.store');
-        Route::put('/{id}', [AdminController::class, 'update'])->name('admin.update');
-        Route::delete('/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-    });
-
-    Route::middleware(['userAkses:ahli'])->prefix('ahli')->group(function () {
-        Route::get('/', [AdminController::class, 'ahli'])->name('adminA.index');
-        Route::post('/', [AdminController::class, 'store'])->name('admin.store');
-        Route::put('/{id}', [AdminController::class, 'update'])->name('admin.update');
-        Route::delete('/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
-    });
-
-
-
-    Route::middleware(['auth', 'userAkses:petani'])->prefix('petani')->group(function () {
-        Route::get('/dashboard/ku', function () {
-            return view('petani.dashboard.index');
-        })->name('dashboard.petani');
+    Route::middleware(['userAkses:user'])->group(function () {
+        Route::get('/welcome', [DashboardController::class, 'user'])->name('welcome');
 
         Route::get('/input-gejala', [PetaniController::class, 'inputGejalaForm'])->name('petani.input.gejala');
         Route::post('/input-gejala', [PetaniController::class, 'simpanGejala'])->name('petani.input.gejala.hama.store');
@@ -89,7 +63,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/Hama/history', [HistoryController::class, 'hama'])->name('histori.hama');
 
         Route::get('/create akun', function () {
-            return view('ahli.dashbo');
+            return view('ahli.dashboard');
         });
     });
+});
+
+Route::get('/home', function() {
+    return redirect ('/dashboard');
 });

@@ -3,7 +3,7 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="" class="logo logo-dark">
+                <a href="/" class="logo logo-dark">
                     <span class="logo-sm">
                         <img src="{{ asset('assets/images/logo-honda.png') }}" alt="" height="24">
                     </span>
@@ -12,7 +12,7 @@
                     </span>
                 </a>
 
-                <a href="" class="logo logo-light">
+                <a href="/" class="logo logo-light">
                     <span class="logo-sm">
                         <img src="{{ asset('assets/images/logo-honda.png') }}" alt="" height="24">
                     </span>
@@ -25,11 +25,20 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-
-            <span class="logo-lg d-flex align-items-center">
-                <img src="{{ asset('assets/images/image.png') }}" alt="" height="60">
-                <span class="ms-2 fw-bold" style="letter-spacing: 3px;font-size: 1.5rem;">CV. SINAR BARU SUMENEP</span>
-            </span>
+            <div class="logo logo-dark">
+                <span class="logo-lg d-flex align-items-center">
+                    <img src="{{ asset('assets/images/image.png') }}" alt="" height="60">
+                    <span class="ms-2 fw-bold " style="letter-spacing: 3px;font-size: 1.5rem;">CV. SINAR BARU
+                        SUMENEP</span>
+                </span>
+            </div>
+            <div class="logo logo-light">
+                <span class="logo-lg d-flex align-items-center">
+                    <img src="{{ asset('assets/images/image.png') }}" alt="" height="60">
+                    <span class="ms-2 fw-bold text-white" style="letter-spacing: 3px;font-size: 1.5rem;">CV. SINAR BARU
+                        SUMENEP</span>
+                </span>
+            </div>
 
 
         </div>
