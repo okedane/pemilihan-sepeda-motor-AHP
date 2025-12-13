@@ -183,52 +183,6 @@
     <script src="{{ asset('assets/js/pages/form-validation.init.js') }}"></script>
     <script src="{{ asset('assets/js/pages/bootstrap-toasts.init.js') }}"></script>
 
-    @if (session('success') || session('error'))
-        <script>
-            window.onload = function() {
-                var toast = new bootstrap.Toast(document.getElementById('liveToast'));
-                toast.show();
-            };
-        </script>
-    @endif
-
-    {{-- <script>
-        // Fungsi toggle mata
-        function setupPasswordToggle(inputId, buttonId, iconId) {
-            const input = document.getElementById(inputId);
-            const button = document.getElementById(buttonId);
-            const icon = document.getElementById(iconId);
-
-            button.addEventListener('click', function() {
-                const isPassword = input.type === 'password';
-                input.type = isPassword ? 'text' : 'password';
-                icon.classList.toggle('mdi-eye-outline', !isPassword);
-                icon.classList.toggle('mdi-eye-off-outline', isPassword);
-            });
-        }
-
-        // Jalankan toggle password
-        setupPasswordToggle('current_password', 'toggleCurrent', 'iconCurrent');
-        setupPasswordToggle('password1', 'togglePassword1', 'toggleIcon1');
-        setupPasswordToggle('password2', 'togglePassword2', 'toggleIcon2');
-
-        // Validasi konfirmasi password
-        document.getElementById('submitBtn').addEventListener('click', function(e) {
-            const password = document.getElementById('password1').value;
-            const confirmPassword = document.getElementById('password2').value;
-            const confirmInput = document.getElementById('password2');
-            const confirmError = document.getElementById('confirmError');
-
-            if (password !== confirmPassword) {
-                e.preventDefault(); // hentikan submit
-                confirmInput.classList.add('is-invalid');
-                confirmError.style.display = 'block';
-            } else {
-                confirmInput.classList.remove('is-invalid');
-                confirmError.style.display = 'none';
-            }
-        });
-    </script> --}}
 
     <script>
         // Fungsi toggle mata
@@ -272,26 +226,6 @@
             });
         }
     </script>
-
-
-
-
-    {{-- <script>
-        function handleSearch(event) {
-            event.preventDefault();
-            const query = document.getElementById('searchInput').value.toLowerCase();
-
-            if (query === "user" || query === "users") {
-                window.location.href = "{{ route('users.index') }}";
-            } else if (query === "pegawai" || query === "pegawau") {
-                window.location.href = "{{ route('pegawai.index') }}";
-            } else if (query === "unitkerja" || query === "unit kerja") {
-                window.location.href = "{{ route('unitKerja.index') }}";
-            } else {
-                alert("Halaman tidak ditemukan");
-            }
-        }
-    </script> --}}
 
     <script>
         $(document).ready(function() {

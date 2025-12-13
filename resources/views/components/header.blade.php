@@ -90,7 +90,7 @@
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
                     <a href="" class="dropdown-item"> <i class="mdi mdi-edit font-size-16 align-middle me-1"></i>
-                        Ubah Password</a>
+                        Profile</a>
 
                     <a class="dropdown-item" href="{{ route('logout') }}"><i
                             class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
