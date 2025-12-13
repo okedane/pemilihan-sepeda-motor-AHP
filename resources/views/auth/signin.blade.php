@@ -28,7 +28,7 @@
                         @enderror
 
                     </div>
-                    
+
                     <div class="mb-3">
                         <div class="d-flex align-items-start">
                             <div class="flex-grow-1">
@@ -47,11 +47,12 @@
                         @enderror
                     </div>
 
-                    <div class="text-center mb-3">
+                    <div class="text-end mb-3">
                         <a href="#" class="text-dark">Lupa Password ?</a>
                     </div>
 
                     <button class="btn btn-dark w-100 mb-2">Login</button>
+                    <a href="{{ route('register') }}" class="btn btn-outline-dark w-100">Register</a>
                 </form>
 
             </div>

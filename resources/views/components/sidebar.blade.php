@@ -8,38 +8,34 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" data-key="t-menu">Menu </li>
 
-                <li>
-                    <a href="" class="waves-effect">
-                        <i data-feather="home"></i>
-                        <span data-key="t-dashboard">Dashboard</span>
-                    </a>
-                </li>
-
                 @auth
-                    @if (auth()->user()->role === 'ahli')
+                    @if (auth()->user()->role === 'admin')
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <i data-feather="cpu"></i>
-                                <span data-key="t-icons">Kriteria</span>
+                            <a href="/dashboard" class="waves-effect">
+                                <i data-feather="home"></i>
+                                <span data-key="t-dashboard">Dashboard</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('kriteria.index') }}">Hama</a></li>
-                            </ul>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('kriteria.penyakit.index') }}">Penyakit</a></li>
-                            </ul>
                         </li>
-
+                        <li>
+                            <a href="{{ route('kriteria.index') }}" class="waves-effect">
+                                <i data-feather="cpu"></i>
+                                <span data-key="t-dashboard">Kriteria</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('alternatif.index') }}" class="waves-effect">
+                                <i data-feather="cpu"></i>
+                                <span data-key="t-dashboard">Alternatif</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow">
-                                <i data-feather="cpu"></i>
-                                <span data-key="t-icons">Alternatif</span>
+                                <i data-feather="users"></i>
+                                <span data-key="t-dashboard">Manajemen Akun</span>
                             </a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('alternatif.index') }}">Hama</a></li>
-                            </ul>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('alternatif.penyakit.index') }}">Penyakit</a></li>
+                                <li><a href="{{ route('admin.admin') }}">Admin</a></li>
+                                <li><a href="{{ route('admin.user') }}">User</a></li>
                             </ul>
                         </li>
                     @endif
@@ -91,33 +87,6 @@
                     @endif
                 @endauth
 
-
-                @auth
-                    @if (auth()->user()->role === 'admin')
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <i data-feather="users"></i>
-                                <span data-key="t-dashboard">Manajemen Admin</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('admin.admin') }}">Admin</a></li>
-                                <li><a href="{{ route('admin.ahli') }}">Ahli</a></li>
-                                <li><a href="{{ route('admin.petani') }}">Petani</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                @endauth
-
-                @auth
-                    @if (auth()->user()->role === 'ahli')
-                        <li>
-                            <a href="{{ route('adminA.index') }}" class="waves-effect">
-                                <i data-feather="users"></i>
-                                <span data-key="t-dashboard">Manajemen Ahli</span>
-                            </a>
-                        </li>
-                    @endif
-                @endauth
             </ul>
 
 

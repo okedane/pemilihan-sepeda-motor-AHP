@@ -15,24 +15,16 @@ class UserSeeeder extends Seeder
         \App\Models\User::create([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123123123'),
             'role' => 'admin',
         ]);
 
         \App\Models\User::create([
-            'name' => 'Ahli',
-            'email' => 'ahli@gmail.com',
-            'password' => bcrypt('12345678'),
-            'role' => 'ahli',
+            'name' => 'user',
+            'email' => 'user@gmail.com',
+            'password' => bcrypt('123123123'),
+            'role' => 'user',
         ]);
-
-        \App\Models\User::create([
-            'name' => 'Petani',
-            'email' => 'petani@gmail.com',
-            'password' => bcrypt('12345678'),
-            'role' => 'petani',
-        ]);
-
 
     }
 }

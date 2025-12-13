@@ -5,21 +5,19 @@
             <div class="navbar-brand-box">
                 <a href="" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/images/favicon.ico') }}" alt="" height="24">
+                        <img src="{{ asset('assets/images/logo-honda.png') }}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('assets/images/favicon.ico') }}" alt="" height="24"> <span
-                            class="logo-txt">Sumenep</span>
+                        <img src="{{ asset('assets/images/logo-honda2.png') }}" alt="" height="24">
                     </span>
                 </a>
 
                 <a href="" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ asset('assets/images/favicon.ico') }}" alt="" height="24">
+                        <img src="{{ asset('assets/images/logo-honda.png') }}" alt="" height="24">
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ asset('assets/images/favicon.ico') }}" alt="" height="24"> <span
-                            class="logo-txt">Sumenep</span>
+                        <img src="{{ asset('assets/images/logo-honda2.png') }}" alt="" height="24">
                     </span>
                 </a>
             </div>
@@ -28,14 +26,12 @@
                 <i class="fa fa-fw fa-bars"></i>
             </button>
 
-            <!-- App Search-->
-            <form class="app-search d-none d-lg-block" onsubmit="handleSearch(event)">
-                <div class="position-relative">
-                    <input type="text" id="searchInput" class="form-control" placeholder="Cari...">
-                    <button class="btn btn-primary" type="submit"><i
-                            class="bx bx-search-alt align-middle"></i></button>
-                </div>
-            </form>
+            <span class="logo-lg d-flex align-items-center">
+                <img src="{{ asset('assets/images/image.png') }}" alt="" height="60">
+                <span class="ms-2 fw-bold" style="letter-spacing: 3px;font-size: 1.5rem;">CV. SINAR BARU SUMENEP</span>
+            </span>
+
+
         </div>
 
         <div class="d-flex">
@@ -77,7 +73,7 @@
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item bg-light-subtle border-start border-end"
                     id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="rounded-circle header-profile-user" src="{{ asset('assets/images/favicon.ico') }}"
+                    <img class="rounded-circle header-profile-user" src="{{ asset('assets/images/profilDefault.jpg') }}"
                         alt="Header Avatar">
                     <span class="d-none d-xl-inline-block ms-1 fw-medium">{{ Auth::user()->name }}</span>
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>

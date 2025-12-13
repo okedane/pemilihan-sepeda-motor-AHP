@@ -35,7 +35,6 @@
 
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Role</th>
                                     <th style="text-align: center; width: 100px;" class="no-export">Action</th>
 
                                 </tr>
@@ -46,7 +45,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->name }}</td>
                                         <td>{{ $item->email }}</td>
-                                        <td>{{ $item->role }}</td>
                                         <td style="text-align: center; width: 100px;">
                                             <div class="d-flex justify-content-center gap-2">
 

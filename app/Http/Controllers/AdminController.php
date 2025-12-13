@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class AdminController extends Controller
 {
@@ -15,16 +13,10 @@ class AdminController extends Controller
         return view('admin.manajemenAdmin', compact('users'));
     }
 
-    public function ahli()
+    public function user()
     {
-        $users = User::where('role', 'ahli')->get();
-        return view('admin.manajemenAhli', compact('users'));
-    }
-
-    public function petani()
-    {
-        $users = User::where('role', 'petani')->get();
-        return view('admin.manajemenPetani', compact('users'));
+        $users = User::where('role', 'user')->get();
+        return view('admin.manajemenUser', compact('users'));
     }
 
     public function store(Request $request)
@@ -40,12 +32,12 @@ class AdminController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-                'role' => $request->role, // role bisa 'admin', 'petani', atau 'ahli'
+                'role' => $request->role,
             ]);
 
-            return redirect()->back()->with('success', 'Admin created successfully.');
+            return redirect()->back()->with('success', 'Akun created successfully.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal membuat admin: ' . $e->getMessage());
+            return back()->with('error', 'Gagal membuat akun: ' . $e->getMessage());
         }
     }
 
@@ -64,9 +56,9 @@ class AdminController extends Controller
                 'email' => $request->email,
             ]);
 
-            return redirect()->back()->with('success', 'Admin updated successfully.');
+            return redirect()->back()->with('success', 'Akun updated successfully.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal memperbarui admin: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memperbarui akun: ' . $e->getMessage());
         }
     }
 
@@ -75,6 +67,6 @@ class AdminController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return back()->with('success', 'data telah dihapus');
+        return back()->with('success', 'Akun telah dihapus');
     }
 }

@@ -33,11 +33,9 @@ class AuthController extends Controller
             // Redirect berdasarkan role
             switch (Auth::user()->role) {
                 case 'admin':
-                    return redirect()->route('dashboard.admin')->with('success', 'Login berhasil sebagai Admin');
-                case 'ahli':
-                    return redirect()->route('dashboard.ahli')->with('success', 'Login berhasil sebagai Ahli');
-                case 'petani':
-                    return redirect()->route('dashboard.petani')->with('success', 'Login berhasil sebagai Petani');
+                    return redirect()->route('dashboard')->with('success', 'Login berhasil sebagai Admin');
+                case 'user':
+                    return redirect()->route('dashboard')->with('success', 'Login berhasil sebagai User');
                 default:
                     Auth::logout();
                     return redirect()->route('login')->with('error', 'Role tidak dikenali.');
@@ -63,17 +61,15 @@ class AuthController extends Controller
     {
         $request->validate([
             'name'     => 'required|string|max:255',
-            // 'username' => 'required|string|max:255|unique:users,username',
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
         User::create([
             'name'     => $request->name,
-            // 'username' => $request->username,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role'     => 'petani', // <- langsung set default 'petani'
+            'role'     => 'user',
         ]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');

@@ -27,11 +27,11 @@
 
     <style>
         body {
-            background-color: #ff0000 !important; /* background merah */
+            background-color: #E40521 !important; /* background merah */
         }
 
         .login-wrapper {
-            background-color: #ff0000 !important; /* full merah */
+            background-color: #E40521 !important; /* full merah */
             min-height: 100vh;
             display: flex;
             justify-content: center;

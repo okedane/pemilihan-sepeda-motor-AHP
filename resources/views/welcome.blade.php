@@ -8,7 +8,7 @@
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">Dashboard</h4>
 
-                        
+
 
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                                 <div class="col-6">
                                     <span class="text-muted mb-3 lh-1 d-block text-truncate">Admin</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $users->where('role', 'admin')->count() }}">{{ $users->where('role', 'admin')->count() }}</span>
+                                        {{-- <span class="counter-value" data-target="{{ $users->where('role', 'admin')->count() }}">{{ $users->where('role', 'admin')->count() }}</span> --}}
                                     </h4>
                                 </div>
                                 <div class="col-6">
@@ -45,7 +45,7 @@
                                 <div class="col-6">
                                     <span class="text-muted mb-3 lh-1 d-block text-truncate">Ahli</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $users->where('role', 'ahli')->count() }}">{{ $users->where('role', 'ahli')->count() }}</span>
+                                        {{-- <span class="counter-value" data-target="{{ $users->where('role', 'ahli')->count() }}">{{ $users->where('role', 'ahli')->count() }}</span> --}}
                                     </h4>
                                 </div>
 
@@ -67,7 +67,7 @@
                                 <div class="col-6">
                                     <span class="text-muted mb-3 lh-1 d-block text-truncate">Petani</span>
                                     <h4 class="mb-3">
-                                        <span class="counter-value" data-target="{{ $users->where('role', 'petani')->count() }}">{{ $users->where('role', 'petani')->count() }}</span>
+                                        {{-- <span class="counter-value" data-target="{{ $users->where('role', 'petani')->count() }}">{{ $users->where('role', 'petani')->count() }}</span> --}}
                                     </h4>
                                 </div>
                                 <div class="col-6">
@@ -78,7 +78,7 @@
                     </div><!-- end card -->
                 </div><!-- end col -->
 
-              
+
             </div><!-- end row-->
 
         </div>
