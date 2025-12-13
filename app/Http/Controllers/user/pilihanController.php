@@ -1,63 +1,59 @@
 <?php
 
-namespace App\Http\Controllers\petani;
+namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
-
-use App\Models\AlternatifPenyakit;
-use App\Models\GejalaPenyakitPetani;
-use App\Models\HasilDiagnosaPenyakit;
-use App\Models\KriteriaPenyakit;
-use App\Models\PenilaianAlternatifPenyakit;
-use App\Models\SubKriteriaPenyakit;
+use App\Models\Alternatif;
+use App\Models\Hasil;
+use App\Models\kriteria;
+use App\Models\PenilaianAlternatifHama;
+use App\Models\PerbandinganAlternatif;
+use App\Models\PilihanUser;
+use App\Models\SubKriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PetaniPenyakitController extends Controller
+class pilihanController extends Controller
 {
-    public function inputGejalaForm()
+    public function inputFrom()
     {
-        $kriterias = KriteriaPenyakit::with('subKriterias')->get();
-        return view('petani.penilaian.penyakit.input_gejala', compact('kriterias'));
+        $kriterias = kriteria::with('subKriterias')->get();
+        return view('user.penilaian.input_pilihan', compact('kriterias'));
+
     }
 
-    public function simpanGejala(Request $request)
+    public function simpanPilihan(Request $request)
     {
         $request->validate([
             'sub_kriteria' => 'required|array',
         ]);
 
         $userId = Auth::id();
-
-        // Hapus gejala lama
-        GejalaPenyakitPetani::where('user_id', $userId)->delete();
-
-        // Simpan gejala baru
+        PilihanUser::where('user_id', $userId)->delete();
         foreach ($request->sub_kriteria as $kriteriaId => $subKriteriaId) {
-            GejalaPenyakitPetani::create([
+            PilihanUser::create([
                 'user_id' => $userId,
                 'sub_kriteria_id' => $subKriteriaId,
             ]);
         }
-
-        // Langsung arahkan ke diagnosa
-        return $this->diagnosa($request);
+        return $this->hasilPilihan($request);
     }
-    public function diagnosa(Request $request)
+
+   public function hasil_pilihan(Request $request)
     {
         $userId = Auth::id();
 
-        // Ambil subkriteria yang dipilih petani
-        $subKriteriaIds = GejalaPenyakitPetani::where('user_id', $userId)->pluck('sub_kriteria_id')->toArray();
+
+        $subKriteriaIds = PilihanUser::where('user_id', $userId)->pluck('sub_kriteria_id')->toArray();
 
         if (empty($subKriteriaIds)) {
-            return redirect()->route('petani.input.gejala.penyakit')->with('error', 'Silakan isi gejala terlebih dahulu.');
+            return redirect()->route('petani.input.gejala')->with('error', 'Silakan isi gejala terlebih dahulu.');
         }
 
-        $alternatifs = AlternatifPenyakit::all();
-        $subkriterias = SubKriteriaPenyakit::with('kriteria')->get();
+        $alternatifs = Alternatif::all();
+        $subkriterias = SubKriteria::with('kriteria')->get();
 
-        // Ambil bobot subkriteria dan kriteria
+
         $bobotSub = [];
         $bobotKriteria = [];
 
@@ -66,7 +62,7 @@ class PetaniPenyakitController extends Controller
             $bobotKriteria[$sub->id] = $sub->kriteria->bobot;
         }
 
-        // Hitung skor setiap alternatif
+
         $hasil = [];
 
         foreach ($alternatifs as $alt) {
@@ -74,7 +70,7 @@ class PetaniPenyakitController extends Controller
             $detail = [];
 
             foreach ($subKriteriaIds as $subId) {
-                $data = PenilaianAlternatifPenyakit::where('alternatif_id', $alt->id)
+                $data = PerbandinganAlternatif::where('alternatif_id', $alt->id)
                     ->where('sub_kriteria_id', $subId)
                     ->first();
 
@@ -105,16 +101,18 @@ class PetaniPenyakitController extends Controller
             ];
         }
 
+
         usort($hasil, fn($a, $b) => $b['skor'] <=> $a['skor']);
         $terbaik = $hasil[0];
 
-        HasilDiagnosaPenyakit::create([
+
+        Hasil::create([
             'user_id' => $userId,
             'sub_kriteria_ids' => json_encode($subKriteriaIds),
             'alternatif_id' => $terbaik['alternatif_id'],
             'skor' => $terbaik['skor'],
         ]);
 
-        return view('petani.diagnosa.penyakit.hasil', compact('hasil', 'terbaik'));
+        return view('pilihan.hasil', compact('hasil', 'terbaik'));
     }
 }

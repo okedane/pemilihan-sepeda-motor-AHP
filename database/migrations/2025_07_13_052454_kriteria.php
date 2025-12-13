@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hasil_diagnosa_petani', function (Blueprint $table) {
+        Schema::create('kriteria', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->json('sub_kriteria_ids');
-            $table->foreignId('alternatif_id')->constrained('alternatif_hamas')->onDelete('cascade');
-            $table->decimal('skor');
+            $table->string('kode')->unique();
+            $table->string('nama');
+            $table->decimal('bobot', 5, 3)->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hasil_diagnosa_petani');
+        Schema::dropIfExists('kriteria');
     }
 };
