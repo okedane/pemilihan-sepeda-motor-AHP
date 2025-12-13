@@ -91,10 +91,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/input-gejala', [PetaniController::class, 'simpanGejala'])->name('petani.input.gejala.hama.store');
         Route::get('/diagnosa', [PetaniController::class, 'diagnosa'])->name('petani.diagnosa');
 
-        Route::get('penyakit/input-gejala', [PetaniPetaniPenyakitController::class, 'inputGejalaForm'])->name('petani.input.gejala.penyakit');
-        Route::post('penyakit/input-gejala', [PetaniPetaniPenyakitController::class, 'simpanGejala'])->name('petani.input.gejala.penyakit.store');
-        Route::get('penyakit/diagnosa', [PetaniPetaniPenyakitController::class, 'diagnosa'])->name('petani.diagnosa.penyakit');
-
         Route::get('/penyakit/history', [HistoryController::class, 'index'])->name('diagnosis.index');
         Route::get('/Hama/history', [HistoryController::class, 'hama'])->name('histori.hama');
 
