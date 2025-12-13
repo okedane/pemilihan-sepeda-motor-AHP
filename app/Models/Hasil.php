@@ -28,6 +28,6 @@ class Hasil extends Model
     // Relasi ke Alternatif Hama
     public function alternatif()
     {
-        return $this->belongsTo(AlternatifHama::class, 'alternatif_id');
+        return $this->belongsTo(Alternatif::class, 'alternatif_id');
     }
 }

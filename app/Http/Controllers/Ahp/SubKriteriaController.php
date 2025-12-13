@@ -1,32 +1,30 @@
 <?php
 
-namespace App\Http\Controllers\ahli\hama;
+namespace App\Http\Controllers\Ahp;
 
 use App\Http\Controllers\Controller;
-use App\Models\KriteriaHama;
-use App\Models\PerbandinganSubKriteriaHama;
-use App\Models\SubKriteriaHama;
+use App\Models\kriteria;
+use App\Models\PerbandinganSubKriteria;
+use App\Models\SubKriteria;
 use Illuminate\Http\Request;
 
-class SubKriteriaHamaController extends Controller
+class SubKriteriaController extends Controller
 {
-
     public function index($id)
     {
-        $subKriteria = SubKriteriaHama::where('kriteria_id', $id)->orderBy('created_at', 'asc')->get();
-        $kriteria = KriteriaHama::findOrFail($id);
-        return view('ahli.hama.sub_kriteria.sub_kriteria', compact('subKriteria', 'kriteria'));
+        $subKriteria = SubKriteria::where('kriteria_id', $id)->orderBy('created_at', 'asc')->get();
+        $kriteria = kriteria::findOrFail($id);
+        return view('subKriteria.sub_kriteria', compact('subKriteria', 'kriteria'));
     }
 
-    public function post(Request $request)
+    public function store(Request $request)
     {
         try {
             $validated = $request->validate([
-                'kriteria_id'        => 'required',
-                'nama'              => 'required',
-
+                'kriteria_id' => 'required',
+                'nama' => 'required',
             ]);
-            SubKriteriaHama::create($validated);
+            SubKriteria::create($validated);
             return redirect()->back()->with('success', 'subKriteria berhasil di tambahkan');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan subKriteria. Silakan coba lagi.');
@@ -37,10 +35,10 @@ class SubKriteriaHamaController extends Controller
     {
         try {
             $validated = $request->validate([
-                'nama'                => 'required',
+                'nama' => 'required',
             ]);
 
-            $subKriteria = SubKriteriaHama::findOrFail($id);
+            $subKriteria = SubKriteria::findOrFail($id);
 
             $subKriteria->update($validated);
 
@@ -52,23 +50,15 @@ class SubKriteriaHamaController extends Controller
 
     public function delete($id)
     {
-        $subKriteria = SubKriteriaHama::findOrFail($id);
+        $subKriteria = SubKriteria::findOrFail($id);
         $subKriteria->delete();
 
         return back()->with('success', 'data telah dihapus');
     }
 
-
-
-
-
-
-
-
-
     public function matriks($id)
     {
-        $subKriteria = SubKriteriaHama::where('kriteria_id', $id)->get();
+        $subKriteria = SubKriteria::where('kriteria_id', $id)->get();
         $matriks = [];
 
         foreach ($subKriteria as $row) {
@@ -76,11 +66,9 @@ class SubKriteriaHamaController extends Controller
                 if ($row->id == $col->id) {
                     $matriks[$row->id][$col->id] = 1;
                 } else {
-                    $nilai = PerbandinganSubKriteriaHama::where('sub_kriteria_id_1', $row->id)
-                        ->where('sub_kriteria_id_2', $col->id)->value('nilai');
+                    $nilai = PerbandinganSubKriteria::where('sub_kriteria_id_1', $row->id)->where('sub_kriteria_id_2', $col->id)->value('nilai');
 
-                    $nilaiKebalikan = PerbandinganSubKriteriaHama::where('sub_kriteria_id_1', $col->id)
-                        ->where('sub_kriteria_id_2', $row->id)->value('nilai');
+                    $nilaiKebalikan = PerbandinganSubKriteria::where('sub_kriteria_id_1', $col->id)->where('sub_kriteria_id_2', $row->id)->value('nilai');
 
                     if ($nilai) {
                         $matriks[$row->id][$col->id] = $nilai;
@@ -93,30 +81,21 @@ class SubKriteriaHamaController extends Controller
             }
         }
 
-
         $subkriterias = $subKriteria->values();
         $hasil = $this->hitungBobotInternal($subkriterias);
         $konsistensi = $this->hitungKonsistensi($hasil['matriks'], $hasil['bobot']);
 
         foreach ($hasil['bobot'] as $idSub => $nilaiBobot) {
-            SubKriteriaHama::where('id', $idSub)->update(['bobot' => $nilaiBobot]);
+            SubKriteria::where('id', $idSub)->update(['bobot' => $nilaiBobot]);
         }
 
-        return view('ahli.hama.sub_kriteria.matrik_sub_kriteria', compact(
-            'subKriteria',
-            'matriks',
-            'hasil',
-            'konsistensi',
-            'id'
-        ));
+        return view('ahli.hama.subKriteria.matrik_sub_kriteria', compact('subKriteria', 'matriks', 'hasil', 'konsistensi', 'id'));
     }
-
-
 
     public function postMatriks(Request $request, $id)
     {
         $matriks = $request->input('matriks', []);
-        $subKriteria = SubKriteriaHama::where('kriteria_id', $id)->get();
+        $subKriteria = SubKriteria::where('kriteria_id', $id)->get();
 
         foreach ($subKriteria as $row) {
             foreach ($subKriteria as $col) {
@@ -124,31 +103,37 @@ class SubKriteriaHamaController extends Controller
                 $id2 = $col->id;
 
                 if ($id1 == $id2) {
-                    PerbandinganSubKriteriaHama::updateOrCreate([
-                        'sub_kriteria_id_1' => $id1,
-                        'sub_kriteria_id_2' => $id2,
-                    ], ['nilai' => 1]);
+                    PerbandinganSubKriteria::updateOrCreate(
+                        [
+                            'sub_kriteria_id_1' => $id1,
+                            'sub_kriteria_id_2' => $id2,
+                        ],
+                        ['nilai' => 1],
+                    );
                 } elseif (isset($matriks[$id1][$id2])) {
                     $nilai = $matriks[$id1][$id2];
 
-                    PerbandinganSubKriteriaHama::updateOrCreate([
-                        'sub_kriteria_id_1' => $id1,
-                        'sub_kriteria_id_2' => $id2,
-                    ], ['nilai' => $nilai]);
+                    PerbandinganSubKriteria::updateOrCreate(
+                        [
+                            'sub_kriteria_id_1' => $id1,
+                            'sub_kriteria_id_2' => $id2,
+                        ],
+                        ['nilai' => $nilai],
+                    );
 
-                    PerbandinganSubKriteriaHama::updateOrCreate([
-                        'sub_kriteria_id_1' => $id2,
-                        'sub_kriteria_id_2' => $id1,
-                    ], ['nilai' => 1 / $nilai]);
+                    PerbandinganSubKriteria::updateOrCreate(
+                        [
+                            'sub_kriteria_id_1' => $id2,
+                            'sub_kriteria_id_2' => $id1,
+                        ],
+                        ['nilai' => 1 / $nilai],
+                    );
                 }
             }
         }
 
         return redirect()->route('matriks', $id)->with('success', 'Matriks sub kriteria berhasil disimpan!');
     }
-
-
-
 
     private function hitungBobotInternal($subkriterias)
     {
@@ -157,16 +142,14 @@ class SubKriteriaHamaController extends Controller
         $totalKolom = [];
         $ids = $subkriterias->pluck('id')->toArray();
 
-
         foreach ($ids as $j) {
             $totalKolom[$j] = 0;
             foreach ($ids as $i) {
-                $nilai = SubKriteriaHama::find($i)->getNilai(SubKriteriaHama::find($j));
+                $nilai = SubKriteria::find($i)->getNilai(SubKriteria::find($j));
                 $matriks[$i][$j] = $nilai;
                 $totalKolom[$j] += $nilai;
             }
         }
-
 
         $normalisasi = [];
         $jumlah = [];
@@ -186,34 +169,30 @@ class SubKriteriaHamaController extends Controller
         return compact('matriks', 'normalisasi', 'jumlah', 'bobot');
     }
 
+    private function hitungKonsistensi($matriks, $bobot)
+    {
+        $n = count($bobot);
+        $lambda_max = 0;
 
-
-
-        private function hitungKonsistensi($matriks, $bobot)
-        {
-            $n = count($bobot);
-            $lambda_max = 0;
-
-            foreach ($matriks as $i => $row) {
-                $jumlah = 0;
-                foreach ($row as $j => $nilai) {
-                    $jumlah += $nilai * $bobot[$j];
-                }
-                $lambda_max += $jumlah / $bobot[$i];
+        foreach ($matriks as $i => $row) {
+            $jumlah = 0;
+            foreach ($row as $j => $nilai) {
+                $jumlah += $nilai * $bobot[$j];
             }
-
-            $lambda_max = $lambda_max / $n;
-            $ci = ($lambda_max - $n) / ($n - 1);
-            $ri = $this->getRI($n);
-            $cr = $ri == 0 ? 0 : $ci / $ri;
-
-            return [
-                'lambda_max' => $lambda_max,
-                'ci' => $ci,
-                'cr' => $cr,
-            ];
+            $lambda_max += $jumlah / $bobot[$i];
         }
 
+        $lambda_max = $lambda_max / $n;
+        $ci = ($lambda_max - $n) / ($n - 1);
+        $ri = $this->getRI($n);
+        $cr = $ri == 0 ? 0 : $ci / $ri;
+
+        return [
+            'lambda_max' => $lambda_max,
+            'ci' => $ci,
+            'cr' => $cr,
+        ];
+    }
 
     private function getRI($n)
     {

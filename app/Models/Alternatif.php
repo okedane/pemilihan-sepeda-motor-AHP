@@ -12,7 +12,7 @@ class Alternatif extends Model
     protected $fillable = ['kode', 'nama'];
     public function penilaian()
     {
-        return $this->hasMany(PenilaianAlternatif::class, 'alternatif_id');
+        return $this->hasMany(PerbandinganAlternatif::class, 'alternatif_id');
     }
     public function hasil()
     {
