@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('perbandingan_sub_kriteria_hamas');
+        Schema::dropIfExists('perbandingan_sub_kriteria');
     }
 };
