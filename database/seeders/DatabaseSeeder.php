@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             KriteriaSeeder::class,
             SubKriteriaSeeder::class,
             AlternatifSeeder::class,
+            PerbandinganAlternatifSeeder::class,
         ]);
     }
 }
