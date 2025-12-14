@@ -99,7 +99,7 @@ class KriteriaController extends Controller
         // Hitung λmax, CI, dan CR untuk cek konsistensi
         $konsistensi = $this->hitungKonsistensi($matriks, $hasil['rataRata']);
 
-        return view('kriteria.matrix_kriteria', [
+        return view('ahp.kriteria.matrix_kriteria', [
             'kriterias' => $kriterias,
             'matriks' => $matriks,
             'editable' => $editable,
@@ -180,5 +180,134 @@ class KriteriaController extends Controller
         $this->simpanBobotKriteria($hasil['rataRata']);
 
         return redirect()->route('kriteria.matriks')->with('success', 'Matriks dan bobot berhasil disimpan!');
+    }
+    private function hitungBobotInternal($kriterias, $matriks)
+    {
+        $jumlahKolom = [];
+        foreach ($kriterias as $col) {
+            $total = 0;
+            foreach ($kriterias as $row) {
+                $total += $matriks[$row->id][$col->id] ?? 0;
+            }
+            $jumlahKolom[$col->id] = $total;
+        }
+
+        $matriksNormalisasi = [];
+        $rataRata = [];
+
+        foreach ($kriterias as $row) {
+            $totalBaris = 0;
+            foreach ($kriterias as $col) {
+                $nilai = $matriks[$row->id][$col->id] ?? 0;
+                $normal = $jumlahKolom[$col->id] != 0 ? round($nilai / $jumlahKolom[$col->id], 4) : 0;
+
+                $matriksNormalisasi[$row->id][$col->id] = $normal;
+                $totalBaris += $normal;
+            }
+
+            $rataRata[$row->id] = round($totalBaris / count($kriterias), 4);
+        }
+
+        return [
+            'normalisasi' => $matriksNormalisasi,
+            'rataRata' => $rataRata,
+        ];
+    }
+
+    private function simpanBobotKriteria($rataRata)
+    {
+        foreach ($rataRata as $kriteriaId => $bobot) {
+            kriteria::where('id', $kriteriaId)->update([
+                'bobot' => $bobot
+            ]);
+        }
+    }
+
+
+
+
+
+    public function hitungKonsistensi()
+    {
+        $kriterias = Kriteria::all();
+        $n = $kriterias->count();
+
+        // Hitung jumlah kolom untuk normalisasi
+        $jumlahKolom = [];
+
+        foreach ($kriterias as $col) {
+            $jumlah = 0;
+            foreach ($kriterias as $row) {
+                $jumlah += PerbandinganKriteria::getNilai($row->id, $col->id); // ✅ gunakan model langsung
+            }
+            $jumlahKolom[$col->id] = $jumlah;
+        }
+
+        // Hitung bobot dari matriks normalisasi
+        $normalisasi = [];
+        $bobot = [];
+
+        foreach ($kriterias as $row) {
+            $total = 0;
+            foreach ($kriterias as $col) {
+                $nilai = PerbandinganKriteria::getNilai($row->id, $col->id); // ✅ gunakan model langsung
+                $normal = $jumlahKolom[$col->id] != 0 ? $nilai / $jumlahKolom[$col->id] : 0;
+
+                $normalisasi[$row->id][$col->id] = $normal;
+                $total += $normal;
+            }
+
+            $bobot[$row->id] = $total / $n;
+        }
+
+        // Hitung lambda max
+        $lambdaMax = 0;
+        foreach ($kriterias as $row) {
+            $total = 0;
+            foreach ($kriterias as $col) {
+                $nilai = PerbandinganKriteria::getNilai($row->id, $col->id);
+                $total += $nilai * $bobot[$col->id]; // A * w
+            }
+
+            if ($bobot[$row->id] == 0) continue; // cegah pembagian nol
+
+            $lambdaMax += $total / $bobot[$row->id]; // (Aw)/w
+        }
+        $lambdaMax = $lambdaMax / $n; // rata-rata lambdaMax
+
+
+
+        // Hitung Consistency Index (CI)
+        $ci = ($lambdaMax - $n) / ($n - 1);
+
+        // Hitung Consistency Ratio (CR)
+        $ri = $this->getRI($n);
+        $cr = $ri == 0 ? 0 : $ci / $ri;
+
+        return [
+            'lambda_max' => round($lambdaMax, 4),
+            'ci' => round($ci, 4),
+            'cr' => round($cr, 4),
+            'bobot' => $bobot,
+        ];
+    }
+
+
+    private function getRI($n)
+    {
+        $riTable = [
+            1 => 0.00,
+            2 => 0.00,
+            3 => 0.58,
+            4 => 0.90,
+            5 => 1.12,
+            6 => 1.24,
+            7 => 1.32,
+            8 => 1.41,
+            9 => 1.45,
+            10 => 1.49
+        ];
+
+        return $riTable[$n] ?? 1.49;
     }
 }

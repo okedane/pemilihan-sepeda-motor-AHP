@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Alternatif extends Model
 {
     use HasFactory;
-    protected $table = 'alternatifs';
+    protected $table = 'alternatif';
     protected $fillable = ['kode', 'nama'];
     public function penilaian()
     {

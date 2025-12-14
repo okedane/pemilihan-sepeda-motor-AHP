@@ -1,15 +1,14 @@
 <x-app>
-    <x-slot:title>Subkriteria</x-slot:title>
     <div class="page-content">
         <div class="container-fluid">
             <div class="row mb-3">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0 font-size-18">subKriteria</h4>
+                        <h4 class="mb-0 font-size-18">alternatif Hama</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="#">Tables</a></li>
-                                <li class="breadcrumb-item active">subKriteria</li>
+                                <li class="breadcrumb-item active">alternatif</li>
                             </ol>
                         </div>
                     </div>
@@ -19,17 +18,15 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4 class="card-title mb-0">Daftar subKriteria</h4>
+                            <h4 class="card-title mb-0">Daftar alternatif</h4>
 
                             <div class="d-flex gap-2 ms-auto">
-                                <a href="{{ route('matriks', $kriteria->id) }}"
-                                    class="btn btn-sm btn-outline-secondary">
-                                    <i class="mdi mdi-table me-1"></i> Matriks Subkriteria
+                                <a href="{{ route('alternatif.penilaian.form') }}" class="btn btn-outline-secondary btn-sm">
+                                    <i class="mdi mdi-table me-1"></i> Penilaian Alternatif
                                 </a>
-
                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#myModal">
-                                    <i class="mdi mdi-plus me-1"></i> Tambah subKriteria
+                                    <i class="mdi mdi-plus me-1"></i> Tambah alternatif
                                 </button>
                             </div>
                         </div>
@@ -44,17 +41,15 @@
                                 <th style="width:20px">No</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
-                                <th>Bobot</th>
                                 <th style="text-align: center; width: 100px;" class="no-export">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($subKriteria as $item)
+                            @foreach ($alternatif as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->kode }}</td>
                                     <td>{{ $item->nama }}</td>
-                                    <th>{{ $item->bobot ?? '-' }}</th>
 
                                     <td style="text-align: center; width: 100px;">
                                         <div class="d-flex justify-content-center gap-2">
@@ -70,7 +65,7 @@
 
 
 
-                                                <form action="{{ route('subKriteria.delete', $item->id) }}"
+                                                <form action="{{ route('alternatif.delete', $item->id) }}"
                                                     method="POST" id="deleteForm{{ $item->id }}">
                                                     @csrf
                                                     @method('DELETE')
@@ -96,7 +91,7 @@
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                Apakah Anda yakin ingin menghapus subKriteria
+                                                                Apakah Anda yakin ingin menghapus alternatif
                                                                 <strong>{{ $item->nama }}</strong>?
                                                             </div>
                                                             <div class="modal-footer">
@@ -123,17 +118,25 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editModalLabel">Edit
-                                                    Data subKriteria</h5>
+                                                    Data alternatif</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <form class="needs-validation"
-                                                action="{{ route('subKriteria.put', $item->id) }}" method="POST"
+                                                action="{{ route('alternatif.put', $item->id) }}" method="POST"
                                                 novalidate>
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-body">
 
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="nama">Code
+                                                            alternatif</label>
+                                                        <input type="text" class="form-control" id="kode"
+                                                            name="kode" value="{{ $item->kode }}" required>
+                                                        <div class="invalid-feedback">Code harus
+                                                            diisi.</div>
+                                                    </div>
                                                     <!-- Nama -->
                                                     <div class="mb-3">
                                                         <label class="form-label" for="nama">Nama</label>
@@ -142,6 +145,8 @@
                                                         <div class="invalid-feedback">Nama harus
                                                             diisi.</div>
                                                     </div>
+
+
 
 
                                                 </div>
@@ -154,54 +159,54 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>
-                                </div><!-- /.modal -->
+
+                                    </div><!-- /.modal -->
+                                </div> <!-- end preview-->
                             @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- sample modal content -->
-        <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
-            data-bs-scroll="true" data-bs-backdrop="static">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">subKriteria</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form class="needs-validation" action="{{ route('subKriteria.post') }}" method="POST"
-                            novalidate>
-                            @csrf
-                            <div class="mb-3">
-                                <label class="form-label" for="validationCustom01">Kode</label>
-                                <input type="text" class="form-control" id="validationCustom01"
-                                    placeholder="Masukan Kode" name="kode" required>
-                                <div class="invalid-feedback">
-                                    Kode harus diisi
-                                </div>
+    <!-- sample modal content -->
+    <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
+        data-bs-scroll="true" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">alternatif</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" action="{{ route('alternatif.post') }}" method="POST"
+                        novalidate>
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label" for="validationCustom01">Code</label>
+                            <input type="text" class="form-control" id="validationCustom01"
+                                placeholder="Masukan Code" name="kode" required>
+                            <div class="invalid-feedback">
+                                Code harus diisi
                             </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="validationCustom01">Nama</label>
-                        <input type="text" class="form-control" id="validationCustom01"
-                            placeholder="Masukan Nama" name="nama" required>
-                        <div class="invalid-feedback">
-                            Nama harus diisi
                         </div>
-                    </div>
-                    <input type="hidden" name="kriteria_id" value="{{ $kriteria->id }}">
+                        <div class="mb-3">
+                            <label class="form-label" for="validationCustom01">Nama</label>
+                            <input type="text" class="form-control" id="validationCustom01"
+                                placeholder="Masukan Nama" name="nama" required>
+                            <div class="invalid-feedback">
+                                Nama harus diisi
+                            </div>
+                        </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect"
-                            data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan
-                            Perubahan</button>
-                    </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary waves-effect"
+                                data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan
+                                Perubahan</button>
+                        </div>
                     </form>
 
                 </div>
@@ -209,6 +214,4 @@
 
         </div>
     </div>
-
-
 </x-app>

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('perbandingan_kriteria_hamas', function (Blueprint $table) {
+        Schema::create('perbandingan_kriterias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kriteria_id_1')->constrained('kriteria')->onDelete('cascade');
             $table->foreignId('kriteria_id_2')->constrained('kriteria')->onDelete('cascade');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('perbandingan_kriteria_hamas');
+        Schema::dropIfExists('perbandingan_kriterias');
     }
 };
