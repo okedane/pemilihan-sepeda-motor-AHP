@@ -33,8 +33,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/kriteria-Matriks/store', [KriteriaController::class, 'storeMatriks'])->name('kriteria.matriks.store');
 
         Route::get('/subKriteria{id}', [SubKriteriaController::class, 'index'])->name('subKriteria.index');
-        Route::post('/subKriteria', [SubKriteriaController::class, 'post'])->name('subKriteria.post');
-        Route::put('/subKriteria{id}', [SubKriteriaController::class, 'put'])->name('subKriteria.put');
+        Route::post('/subKriteria', [SubKriteriaController::class, 'store'])->name('subKriteria.post');
+        Route::put('/subKriteria{id}', [SubKriteriaController::class, 'update'])->name('subKriteria.put');
         Route::delete('/subKriteria{id}', [SubKriteriaController::class, 'delete'])->name('subKriteria.delete');
         Route::get('/subKriteria{id}/matriks/go', [SubKriteriaController::class, 'matriks'])->name('matriks');
         Route::post('/subKriteria{id}/matriks/store/go', [SubKriteriaController::class, 'postMatriks'])->name('matriks.post');

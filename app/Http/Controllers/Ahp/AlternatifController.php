@@ -15,7 +15,7 @@ class AlternatifController extends Controller
      public function index()
     {
         $alternatif = Alternatif::orderBy('created_at', 'asc')->get();
-        return view('Alternatif.alternatif', compact('alternatif'));
+        return view('ahp.alternatif.alternatif', compact('alternatif'));
     }
 
     public function store(Request $request)
@@ -83,7 +83,7 @@ class AlternatifController extends Controller
             }
         }
 
-        return view('Alternatif.penilaian', compact('alternatifs', 'kriterias', 'penilaian', 'normalisasi', 'pembobotan'));
+        return view('ahp.alternatif.penilaian', compact('alternatifs', 'kriterias', 'penilaian', 'normalisasi', 'pembobotan'));
     }
 
 

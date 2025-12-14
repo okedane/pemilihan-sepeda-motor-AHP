@@ -9,9 +9,9 @@ class PerbandinganAlternatif extends Model
 {
     use HasFactory;
     protected $table = 'perbandingan_alternatif';
-    protected $fillable = [
+      protected $fillable = [
         'alternatif_id',
-        'kriteria_id',
+        'sub_kriteria_id',
         'nilai',
     ];
 
@@ -21,8 +21,8 @@ class PerbandinganAlternatif extends Model
         return $this->belongsTo(Alternatif::class, 'alternatif_id');
     }
     // Relasi ke Kriteria
-    public function kriteria()
+     public function subKriteria()
     {
-        return $this->belongsTo(Kriteria::class, 'kriteria_id');
+        return $this->belongsTo(SubKriteria::class, 'sub_kriteria_id');
     }
 }

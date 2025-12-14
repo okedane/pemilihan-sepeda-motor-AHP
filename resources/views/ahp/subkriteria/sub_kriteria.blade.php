@@ -41,7 +41,7 @@
                         <thead>
                             <tr>
                                 <th style="width:20px">No</th>
-
+                                <th>Kode</th>
                                 <th>Nama</th>
                                 <th>Bobot</th>
                                 <th style="text-align: center; width: 100px;" class="no-export">Action</th>
@@ -51,6 +51,7 @@
                             @foreach ($subKriteria as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->kode }}</td>
                                     <td>{{ $item->nama }}</td>
                                     <th>{{ $item->bobot ?? '-' }}</th>
 
@@ -175,30 +176,38 @@
                         <form class="needs-validation" action="{{ route('subKriteria.post') }}" method="POST"
                             novalidate>
                             @csrf
-
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom01">Nama</label>
+                                <label class="form-label" for="validationCustom01">Kode</label>
                                 <input type="text" class="form-control" id="validationCustom01"
-                                    placeholder="Masukan Nama" name="nama" required>
+                                    placeholder="Masukan Kode" name="kode" required>
                                 <div class="invalid-feedback">
-                                    Nama harus diisi
+                                    Kode harus diisi
                                 </div>
                             </div>
-                            <input type="hidden" name="kriteria_id" value="{{ $kriteria->id }}">
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary waves-effect"
-                                    data-bs-dismiss="modal">Tutup</button>
-                                <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan
-                                    Perubahan</button>
-                            </div>
-                        </form>
-
+                    <div class="mb-3">
+                        <label class="form-label" for="validationCustom01">Nama</label>
+                        <input type="text" class="form-control" id="validationCustom01"
+                            placeholder="Masukan Nama" name="nama" required>
+                        <div class="invalid-feedback">
+                            Nama harus diisi
+                        </div>
                     </div>
-                </div>
+                    <input type="hidden" name="kriteria_id" value="{{ $kriteria->id }}">
 
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect"
+                            data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan
+                            Perubahan</button>
+                    </div>
+                    </form>
+
+                </div>
             </div>
+
         </div>
+    </div>
 
 
 </x-app>

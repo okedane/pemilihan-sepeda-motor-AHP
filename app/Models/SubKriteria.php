@@ -12,24 +12,32 @@ class SubKriteria extends Model
     protected $fillable = ['kriteria_id', 'kode', 'nama', 'bobot'];
 
 
-    public function getNilai(SubKriteriHama $subKriteria)
+     public function getNilai(SubKriteria $lainnya)
     {
-        $nilai = PerbandinganSubKriteria::getNilai($this->id, $subKriteria->id);
-        if ($nilai == 0) {
-            $nilai = 1 / PerbandinganSubKriteria::getNilai($subKriteria->id, $this->id);
-        }
-        return $nilai;
+        $nilai = PerbandinganSubKriteria::where('sub_kriteria_id_1', $this->id)
+            ->where('sub_kriteria_id_2', $lainnya->id)
+            ->value('nilai');
+
+        if ($nilai) return $nilai;
+
+        $nilaiKebalikan = PerbandinganSubKriteria::where('sub_kriteria_id_1', $lainnya->id)
+            ->where('sub_kriteria_id_2', $this->id)
+            ->value('nilai');
+
+        return $nilaiKebalikan ? 1 / $nilaiKebalikan : 1; // Default 1 jika tidak ada data
     }
 
     public function kriteria()
     {
         return $this->belongsTo(kriteria::class, 'kriteria_id');
     }
-    public function perbandinganSubKriteria1()
+
+     public function perbandingan1()
     {
         return $this->hasMany(PerbandinganSubKriteria::class, 'sub_kriteria_id_1');
     }
-    public function perbandinganSubKriteria2()
+
+    public function perbandingan2()
     {
         return $this->hasMany(PerbandinganSubKriteria::class, 'sub_kriteria_id_2');
     }

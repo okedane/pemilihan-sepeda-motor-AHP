@@ -8,14 +8,24 @@ use Illuminate\Database\Eloquent\Model;
 class PerbandinganSubKriteria extends Model
 {
     use HasFactory;
-    protected $table = 'perbandingan_sub_kriterias';
+    protected $table = 'perbandingan_sub_kriteria';
     protected $fillable = ['sub_kriteria_id_1', 'sub_kriteria_id_2', 'nilai'];
-    public static function getNilai($id1, $id2)
+
+    public function getNilai(SubKriteria $lainnya)
     {
-        return self::where('sub_kriteria_id_1', $id1)
-            ->where('sub_kriteria_id_2', $id2)
-            ->value('nilai') ?? 0;
+        $nilai = PerbandinganSubKriteria::where('sub_kriteria_id_1', $this->id)
+            ->where('sub_kriteria_id_2', $lainnya->id)
+            ->value('nilai');
+
+        if ($nilai) return $nilai;
+
+        $nilaiKebalikan = PerbandinganSubKriteria::where('sub_kriteria_id_1', $lainnya->id)
+            ->where('sub_kriteria_id_2', $this->id)
+            ->value('nilai');
+
+        return $nilaiKebalikan ? 1 / $nilaiKebalikan : null;
     }
+
     public function subKriteria1()
     {
         return $this->belongsTo(SubKriteria::class, 'sub_kriteria_id_1');

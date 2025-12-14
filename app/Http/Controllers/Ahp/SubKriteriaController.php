@@ -14,7 +14,7 @@ class SubKriteriaController extends Controller
     {
         $subKriteria = SubKriteria::where('kriteria_id', $id)->orderBy('created_at', 'asc')->get();
         $kriteria = kriteria::findOrFail($id);
-        return view('subKriteria.sub_kriteria', compact('subKriteria', 'kriteria'));
+        return view('ahp.subkriteria.sub_kriteria', compact('subKriteria', 'kriteria'));
     }
 
     public function store(Request $request)
@@ -22,16 +22,17 @@ class SubKriteriaController extends Controller
         try {
             $validated = $request->validate([
                 'kriteria_id' => 'required',
+                'kode' => 'required',
                 'nama' => 'required',
             ]);
             SubKriteria::create($validated);
             return redirect()->back()->with('success', 'subKriteria berhasil di tambahkan');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan subKriteria. Silakan coba lagi.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menambahkan subKriteria. Silakan coba lagi.'. $th->getMessage());
         }
     }
 
-    public function put(Request $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $validated = $request->validate([
@@ -89,7 +90,7 @@ class SubKriteriaController extends Controller
             SubKriteria::where('id', $idSub)->update(['bobot' => $nilaiBobot]);
         }
 
-        return view('ahli.hama.subKriteria.matrik_sub_kriteria', compact('subKriteria', 'matriks', 'hasil', 'konsistensi', 'id'));
+        return view('ahp.subkriteria.matrix_subKriteria', compact('subKriteria', 'matriks', 'hasil', 'konsistensi', 'id'));
     }
 
     public function postMatriks(Request $request, $id)
