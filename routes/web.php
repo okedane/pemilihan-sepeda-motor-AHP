@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Ahp\KriteriaController;
 use App\Http\Controllers\petani\PetaniController;
 use App\Http\Controllers\Ahp\AlternatifController;
-use App\Http\Controllers\Ahp\KriteriaController;
 use App\Http\Controllers\Ahp\SubKriteriaController;
+use App\Http\Controllers\HasilPerhitunganController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -19,6 +21,11 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('profile/{user}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('profile-foto/{user}', [ProfileController::class, 'foto'])->name('profile.foto');
+    Route::put('profile-reset/{user}', [ProfileController::class, 'reset'])->name('profile.reset');
 
     Route::middleware(['userAkses:admin'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -44,7 +51,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/penilaian-alternatif', [AlternatifController::class, 'tampilPenilaianAlternatif'])->name('alternatif.penilaian.form');
         Route::post('/penilaian-alternatif', [AlternatifController::class, 'simpanPenilaian'])->name('alternatif.penilaian.simpan');
 
-        // Buatkan route management account
+        Route::get('HasilPerhitungan', [HasilPerhitunganController::class, 'index'])->name('hasil.index');
+
         Route::get('/management-account-admin', [AdminController::class, 'admin'])->name('akun.admin');
         Route::get('/management-account-user', [AdminController::class, 'user'])->name('akun.user');
         Route::post('/management-account', [AdminController::class, 'store'])->name('akun.store');
@@ -68,6 +76,6 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::get('/home', function() {
-    return redirect ('/dashboard');
+Route::get('/home', function () {
+    return redirect('/dashboard');
 });

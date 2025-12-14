@@ -7,13 +7,13 @@ $(document).ready(function () {
     scrollX: true,
     lengthChange: false,
     buttons: [
-      {
-        extend: "copy",
-        text: "Copy",
-        exportOptions: {
-          columns: ":not(:last-child)"
-        }
-      },
+    //   {
+    //     extend: "copy",
+    //     text: "Copy",
+    //     exportOptions: {
+    //       columns: ":not(:last-child)"
+    //     }
+    //   },
       {
         extend: "excel",
         text: "Excel",
@@ -30,7 +30,7 @@ $(document).ready(function () {
           columns: ":not(:last-child)"
         }
       },
-      "colvis"
+    //   "colvis"
     ],
     columnDefs: [
       { targets: -1, orderable: false } // ✅ nonaktifkan sorting di kolom Action

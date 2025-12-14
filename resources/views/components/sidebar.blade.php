@@ -18,19 +18,19 @@
                         </li>
                         <li>
                             <a href="{{ route('alternatif.index') }}" class="waves-effect">
-                                <i data-feather="cpu"></i>
+                                <i data-feather="layers"></i>
                                 <span data-key="t-dashboard">Alternatif</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('kriteria.index') }}" class="waves-effect">
-                                <i data-feather="cpu"></i>
+                                <i data-feather="sliders"></i>
                                 <span data-key="t-dashboard">Kriteria</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="waves-effect">
-                                <i data-feather="cpu"></i>
+                            <a href="{{ route('hasil.index') }}" class="waves-effect">
+                                <i data-feather="bar-chart-2"></i>
                                 <span data-key="t-dashboard">Hasil Perhitungan</span>
                             </a>
                         </li>

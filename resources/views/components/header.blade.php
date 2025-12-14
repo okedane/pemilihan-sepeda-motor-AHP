@@ -89,9 +89,10 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a href="" class="dropdown-item"> <i class="mdi mdi-edit font-size-16 align-middle me-1"></i>
+                    <a href="{{ route('profile.index') }}" class="dropdown-item"> <i
+                            class="mdi mdi-face-man font-size-16 align-middle me-1"></i>
                         Profile</a>
-
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}"><i
                             class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                 </div>
@@ -100,3 +101,4 @@
         </div>
     </div>
 </header>
+
