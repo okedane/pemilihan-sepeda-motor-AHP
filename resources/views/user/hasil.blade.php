@@ -40,7 +40,7 @@
                                         </div>
                                         <div>
                                             <h4 class="mb-0 fw-bold text-danger">{{ $terbaik['nama'] }}</h4>
-                                            <small class="text-muted">Motor yang paling sesuai dengan kebutuhan Anda</small>
+                                            <small class="text-muted"></small>
                                         </div>
                                     </div>
                                     <p class="text-muted mb-0">
