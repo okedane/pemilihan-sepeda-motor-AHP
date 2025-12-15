@@ -229,15 +229,25 @@
                                     </div>
                                     <div class="col">
                                         <h4 class="fw-bold text-danger mb-1">{{ $item->alternatif->nama }}</h4>
-                                        <p class="text-muted mb-1">
-                                            <i class="fas fa-star text-warning me-1"></i>
-                                            Skor AHP: <strong
-                                                class="text-danger">{{ number_format($item->skor, 3) }}</strong>
-                                        </p>
-                                        <p class="text-muted mb-0 small">
-                                            <i class="far fa-calendar me-1"></i>
-                                            {{ $item->created_at->format('d M Y H:i') }} WIB
-                                        </p>
+                                        <div class="mb-2">
+                                            <span class="badge bg-danger-subtle text-danger fs-6 fw-bold me-2">
+                                                <i class="fas fa-star text-warning me-1"></i>
+                                                Skor AHP: {{ number_format($item->skor, 3) }}
+                                            </span>
+                                            <span class="badge bg-light text-muted fw-normal">
+                                                <i class="far fa-calendar me-1"></i>
+                                                {{ $item->created_at->format('d M Y H:i') }} WIB
+                                            </span>
+                                        </div>
+                                        <div class="mb-2">
+                                            <span class="fw-semibold text-dark me-2">
+                                                <i class="fas fa-money-bill-wave text-success me-1"></i>
+                                                {{ 'Rp ' . number_format($item->alternatif->harga, 0, ',', '.') }}
+                                            </span>
+                                        </div>
+                                        <div class="text-muted small" style="white-space: pre-line;">
+                                            {{ $item->alternatif->deskripsi }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

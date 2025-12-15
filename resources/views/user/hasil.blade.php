@@ -36,11 +36,21 @@
                                 <div class="col-md-12">
                                     <div class="d-flex align-items-center mb-3">
                                         <div class="bg-danger bg-opacity-10 rounded-circle p-2 me-3">
-                                            <i class="fas fa-motorcycle text-danger" style="font-size: 1.5rem;"></i>
+                                            <i class="fas fa-motorcycle text-danger" style="font-size: 2.5rem;"></i>
                                         </div>
                                         <div>
-                                            <h4 class="mb-0 fw-bold text-danger">{{ $terbaik['nama'] }}</h4>
+                                            <div class="d-flex align-items-center mb-1">
+                                                <h4 class="mb-0 fw-bold text-danger me-3">{{ $terbaik['nama'] }}</h4>
+                                                <span class="badge bg-danger bg-opacity-10 text-danger" style="font-size: 1rem;">
+                                                    Rp{{ number_format($terbaik['harga'], 0, ',', '.') }}
+                                                </span>
+                                            </div>
                                             <small class="text-muted">Motor yang paling sesuai dengan kebutuhan Anda</small>
+                                            @if(!empty($terbaik['deskripsi']))
+                                                <div class="text-muted small" style="max-width: 400px;">
+                                                    {{ $terbaik['deskripsi'] }}
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <p class="text-muted mb-0">

@@ -102,6 +102,8 @@ class PilihanController extends Controller
             $hasil[] = [
                 'alternatif_id' => $alt->id,
                 'nama' => $alt->nama,
+                'harga' => $alt->harga,
+                'deskripsi' => $alt->deskripsi,
                 'skor' => round($skor, 5),
                 'detail' => $detail,
             ];
