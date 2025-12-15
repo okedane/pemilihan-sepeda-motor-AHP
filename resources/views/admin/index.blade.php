@@ -219,6 +219,10 @@
             });
         }
 
+        // Data dari controller
+        const jumlahRekomendasi = @json(array_values($jumlahRekomendasi));
+        const namaBulanChart = @json($namaBulanChart);
+
         let lineDatalabelColors = getChartColorsArray("#line_chart_datalabel");
 
         let options = {
@@ -241,8 +245,8 @@
                 curve: "straight"
             },
             series: [{
-                name: "Jumlah User",
-                data: [26, 24, 32, 36, 33, 31, 33, 30, 28, 35, 34, 32]
+                name: "Jumlah Rekomendasi",
+                data: jumlahRekomendasi
             }],
             title: {
                 text: "Jumlah User Melakukan Rekomendasi Sepeda Motor",
@@ -263,20 +267,17 @@
                 size: 0
             },
             xaxis: {
-                categories: [
-                    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-                ],
+                categories: namaBulanChart,
                 title: {
                     text: "Bulan"
                 }
             },
             yaxis: {
                 title: {
-                    text: "Jumlah User"
+                    text: "Jumlah Rekomendasi"
                 },
-                min: 5,
-                max: 40
+                min: 0,
+                // max: Math.max(...jumlahRekomendasi) + 5 // opsional, auto max
             },
             legend: {
                 position: "top",
@@ -305,6 +306,12 @@
             options
         );
         chart.render();
+
+        // Ganti tahun, reload page dengan query tahun
+        $('#tahun').on('change', function () {
+            const tahun = $(this).val();
+            window.location.href = '?tahun=' + tahun;
+        });
     </script>
 
 </body>
