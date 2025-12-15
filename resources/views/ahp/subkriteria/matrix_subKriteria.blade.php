@@ -6,10 +6,10 @@
             <div class="row mb-3">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0 font-size-18">Matriks Perbandingan Kriteria</h4>
+                        <h4 class="mb-0 font-size-18">Matriks Perbandingan Subkriteria</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="#">Kriteria</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('subKriteria.index', $id) }}">SubKriteria</a></li>
                                 <li class="breadcrumb-item active">Matriks</li>
                             </ol>
                         </div>
@@ -69,8 +69,8 @@
                             </button>
                         </div>
 
-                        {{-- Jika ada hasil --}}
-                        @if (!empty($hasil))
+                        {{-- Normalisasi Matriks --}}
+                        @if ($lengkap && $hasil)
                             <hr>
                             <h5 class="mt-4">Normalisasi Matriks</h5>
                             <div class="table-responsive">
@@ -89,19 +89,23 @@
                                             <tr>
                                                 <th class="text-start">{{ $row->nama }}</th>
                                                 @foreach ($subKriteria as $col)
-                                                   <td>{{ number_format($hasil['normalisasi'][$row->id][$col->id] ?? 0, 3) }}</td>
-                                                    </td>
+                                                    <td>{{ number_format($hasil['normalisasi'][$row->id][$col->id], 3) }}</td>
                                                 @endforeach
-                                                <td>{{ number_format($hasil['bobot'][$row->id] ?? 0, 3) }}</td>
+                                                <td class="fw-bold">{{ number_format($hasil['bobot'][$row->id], 3) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                        @else
+                            <div class="alert alert-warning mt-4">
+                                ⚠️ Silakan lengkapi dan simpan matriks perbandingan terlebih dahulu
+                                untuk melihat hasil normalisasi dan konsistensi.
+                            </div>
                         @endif
 
                         {{-- Hasil Konsistensi --}}
-                        @if (!empty($konsistensi))
+                        @if ($lengkap && $konsistensi && $konsistensi['ci'] >= 0)
                             <div class="card mt-3">
                                 <div class="card-body">
                                     <h5 class="mb-3">Hasil Konsistensi</h5>
@@ -110,7 +114,7 @@
                                         </li>
                                         <li>CI: <strong>{{ number_format($konsistensi['ci'], 4) }}</strong></li>
                                         <li>CR: <strong>{{ number_format($konsistensi['cr'], 4) }}</strong>
-                                            @if ($konsistensi['cr'] <= 0.1)
+                                            @if ($konsistensi['cr'] >= 0 && $konsistensi['cr'] <= 0.1)
                                                 <span class="text-success"> (Konsisten ✅)</span>
                                             @else
                                                 <span class="text-danger"> (Tidak Konsisten ❌)</span>

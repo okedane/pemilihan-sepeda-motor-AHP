@@ -11,6 +11,8 @@ use App\Http\Controllers\petani\PetaniController;
 use App\Http\Controllers\Ahp\AlternatifController;
 use App\Http\Controllers\Ahp\SubKriteriaController;
 use App\Http\Controllers\HasilPerhitunganController;
+use App\Http\Controllers\user\HistoryController as UserHistoryController;
+use App\Http\Controllers\user\PilihanController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -63,12 +65,10 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['userAkses:user'])->group(function () {
         Route::get('/welcome', [DashboardController::class, 'user'])->name('welcome');
 
-        Route::get('/input-gejala', [PetaniController::class, 'inputGejalaForm'])->name('petani.input.gejala');
-        Route::post('/input-gejala', [PetaniController::class, 'simpanGejala'])->name('petani.input.gejala.hama.store');
-        Route::get('/diagnosa', [PetaniController::class, 'diagnosa'])->name('petani.diagnosa');
-
-        Route::get('/penyakit/history', [HistoryController::class, 'index'])->name('diagnosis.index');
-        Route::get('/Hama/history', [HistoryController::class, 'hama'])->name('histori.hama');
+        Route::get('/input-data', [PilihanController::class, 'inputData'])->name('inputData');
+        Route::post('/simpan-data', [PilihanController::class, 'simpan'])->name('data.store');
+        Route::get('/pilih', [PilihanController::class, 'pilih'])->name('data.pilih');
+        Route::get('/history', [UserHistoryController::class, 'history'])->name('history');
 
         Route::get('/create akun', function () {
             return view('ahli.dashboard');

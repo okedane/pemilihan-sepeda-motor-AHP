@@ -68,6 +68,8 @@ class AlternatifController extends Controller
         $penilaian = [];
         $normalisasi = [];
         $pembobotan = [];
+        // Tampilkan hasil jika sudah ada data yang tersimpan di DB (persisten setelah refresh)
+        $tampilkanHasil = PerbandinganAlternatif::exists();
 
         foreach ($alternatifs as $alt) {
             foreach ($kriterias as $krit) {
@@ -83,7 +85,7 @@ class AlternatifController extends Controller
             }
         }
 
-        return view('ahp.alternatif.penilaian', compact('alternatifs', 'kriterias', 'penilaian', 'normalisasi', 'pembobotan'));
+        return view('ahp.alternatif.penilaian', compact('alternatifs', 'kriterias', 'penilaian', 'normalisasi', 'pembobotan', 'tampilkanHasil'));
     }
 
 

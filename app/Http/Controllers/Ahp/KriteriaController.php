@@ -61,9 +61,9 @@ class KriteriaController extends Controller
     {
         $kriterias = Kriteria::all();
 
-        // Matriks utama dan pengontrol kolom editable
         $matriks = [];
         $editable = [];
+        $lengkap = true; // ⬅️ FLAG
 
         foreach ($kriterias as $row) {
             foreach ($kriterias as $col) {
@@ -80,32 +80,29 @@ class KriteriaController extends Controller
                         $nilai_kebalikan = PerbandinganKriteria::where('kriteria_id_1', $col->id)->where('kriteria_id_2', $row->id)->value('nilai');
 
                         if ($nilai_kebalikan) {
-                            $nilai = round(1 / $nilai_kebalikan, 4);
-                            $matriks[$row->id][$col->id] = $nilai;
+                            $matriks[$row->id][$col->id] = round(1 / $nilai_kebalikan, 4);
                             $editable[$row->id][$col->id] = false;
                         } else {
                             $matriks[$row->id][$col->id] = null;
                             $editable[$row->id][$col->id] = true;
+                            $lengkap = false; // ⛔ matriks belum lengkap
                         }
                     }
                 }
             }
         }
 
-        // Proses perhitungan bobot dan konsistensi
-        $hasil = $this->hitungBobotInternal($kriterias, $matriks);
-        $this->simpanBobotKriteria($hasil['rataRata']);
+        $hasil = null;
+        $konsistensi = null;
 
-        // Hitung λmax, CI, dan CR untuk cek konsistensi
-        $konsistensi = $this->hitungKonsistensi($matriks, $hasil['rataRata']);
+        // ⬅️ HITUNG HANYA JIKA LENGKAP
+        if ($lengkap && $kriterias->count() > 1) {
+            $hasil = $this->hitungBobotInternal($kriterias, $matriks);
+            $this->simpanBobotKriteria($hasil['rataRata']);
+            $konsistensi = $this->hitungKonsistensi();
+        }
 
-        return view('ahp.kriteria.matrix_kriteria', [
-            'kriterias' => $kriterias,
-            'matriks' => $matriks,
-            'editable' => $editable,
-            'hasil' => $hasil,
-            'konsistensi' => $konsistensi,
-        ]);
+        return view('ahp.kriteria.matrix_kriteria', compact('kriterias', 'matriks', 'editable', 'hasil', 'konsistensi', 'lengkap'));
     }
 
     public function storeMatriks(Request $request)
@@ -218,14 +215,10 @@ class KriteriaController extends Controller
     {
         foreach ($rataRata as $kriteriaId => $bobot) {
             kriteria::where('id', $kriteriaId)->update([
-                'bobot' => $bobot
+                'bobot' => $bobot,
             ]);
         }
     }
-
-
-
-
 
     public function hitungKonsistensi()
     {
@@ -269,13 +262,13 @@ class KriteriaController extends Controller
                 $total += $nilai * $bobot[$col->id]; // A * w
             }
 
-            if ($bobot[$row->id] == 0) continue; // cegah pembagian nol
+            if ($bobot[$row->id] == 0) {
+                continue;
+            } // cegah pembagian nol
 
             $lambdaMax += $total / $bobot[$row->id]; // (Aw)/w
         }
         $lambdaMax = $lambdaMax / $n; // rata-rata lambdaMax
-
-
 
         // Hitung Consistency Index (CI)
         $ci = ($lambdaMax - $n) / ($n - 1);
@@ -292,20 +285,19 @@ class KriteriaController extends Controller
         ];
     }
 
-
     private function getRI($n)
     {
         $riTable = [
-            1 => 0.00,
-            2 => 0.00,
+            1 => 0.0,
+            2 => 0.0,
             3 => 0.58,
-            4 => 0.90,
+            4 => 0.9,
             5 => 1.12,
             6 => 1.24,
             7 => 1.32,
             8 => 1.41,
             9 => 1.45,
-            10 => 1.49
+            10 => 1.49,
         ];
 
         return $riTable[$n] ?? 1.49;

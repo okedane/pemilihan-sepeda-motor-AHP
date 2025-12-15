@@ -10,4 +10,6 @@ class HasilPerhitunganController extends Controller
     {
         return view('hasil.index');
     }
+
+    
 }

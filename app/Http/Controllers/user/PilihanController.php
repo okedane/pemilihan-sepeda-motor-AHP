@@ -1,28 +1,26 @@
 <?php
 
-namespace App\Http\Controllers\petani;
+namespace App\Http\Controllers\user;
 
 use App\Http\Controllers\Controller;
-use App\Models\AlternatifHama;
-use App\Models\GejalaPetani;
-use App\Models\HasilDiagnosaPetani;
-use App\Models\KriteriaHama;
-use App\Models\PenilaianAlternatifHama;
-use App\Models\SubKriteriaHama;
+use App\Models\Alternatif;
+use App\Models\Hasil;
+use App\Models\kriteria;
+use App\Models\PerbandinganAlternatif;
+use App\Models\PilihanUser;
+use App\Models\SubKriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
-
-class PetaniController extends Controller
+class PilihanController extends Controller
 {
-    public function inputGejalaForm()
+     public function inputData()
     {
-        $kriterias = KriteriaHama::with('subKriterias')->get();
-        return view('petani.penilaian.hama.input_gejala', compact('kriterias'));
+        $kriterias = kriteria::with('subKriterias')->get();
+        return view('user.inputData', compact('kriterias'));
     }
 
-    public function simpanGejala(Request $request)
+    public function simpan(Request $request)
     {
         $request->validate([
             'sub_kriteria' => 'required|array',
@@ -31,35 +29,35 @@ class PetaniController extends Controller
         $userId = Auth::id();
 
 
-        GejalaPetani::where('user_id', $userId)->delete();
+        PilihanUser::where('user_id', $userId)->delete();
 
 
         foreach ($request->sub_kriteria as $kriteriaId => $subKriteriaId) {
-            GejalaPetani::create([
+            PilihanUser::create([
                 'user_id' => $userId,
                 'sub_kriteria_id' => $subKriteriaId,
             ]);
         }
 
 
-        return $this->diagnosa($request);
+        return $this->pilih($request);
     }
 
 
 
-    public function diagnosa(Request $request)
+    public function pilih(Request $request)
     {
         $userId = Auth::id();
 
 
-        $subKriteriaIds = GejalaPetani::where('user_id', $userId)->pluck('sub_kriteria_id')->toArray();
+        $subKriteriaIds = PilihanUser::where('user_id', $userId)->pluck('sub_kriteria_id')->toArray();
 
         if (empty($subKriteriaIds)) {
-            return redirect()->route('petani.input.gejala')->with('error', 'Silakan isi gejala terlebih dahulu.');
+            return redirect()->route('user.inputData')->with('error', 'Silakan isi gejala terlebih dahulu.');
         }
 
-        $alternatifs = AlternatifHama::all();
-        $subkriterias = SubKriteriaHama::with('kriteria')->get();
+        $alternatifs = Alternatif::all();
+        $subkriterias = SubKriteria::with('kriteria')->get();
 
 
         $bobotSub = [];
@@ -78,7 +76,7 @@ class PetaniController extends Controller
             $detail = [];
 
             foreach ($subKriteriaIds as $subId) {
-                $data = PenilaianAlternatifHama::where('alternatif_id', $alt->id)
+                $data = PerbandinganAlternatif::where('alternatif_id', $alt->id)
                     ->where('sub_kriteria_id', $subId)
                     ->first();
 
@@ -114,13 +112,13 @@ class PetaniController extends Controller
         $terbaik = $hasil[0];
 
 
-        HasilDiagnosaPetani::create([
+        Hasil::create([
             'user_id' => $userId,
             'sub_kriteria_ids' => json_encode($subKriteriaIds),
             'alternatif_id' => $terbaik['alternatif_id'],
             'skor' => $terbaik['skor'],
         ]);
 
-        return view('petani.diagnosa.hama.hasil', compact('hasil', 'terbaik'));
+        return view('user.hasil', compact('hasil', 'terbaik'));
     }
 }

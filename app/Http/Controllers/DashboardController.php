@@ -13,6 +13,6 @@ class DashboardController extends Controller
 
     public function user(Request $request)
     {
-        return view('petani.index');
+        return view('user.dashboard');
     }
 }

@@ -50,33 +50,24 @@
                 @auth
                     @if (auth()->user()->role === 'user')
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <i data-feather="activity"></i>
-                                <span data-key="t-dashboard">Gejala</span>
+                            <a href="{{ route('dashboard') }}" class="waves-effect">
+                                <i data-feather="home"></i>
+                                <span data-key="t-dashboard">Dashboard</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li>
-                                    <a href="{{ route('petani.input.gejala') }}">
-                                        <i data-feather="alert-circle"></i>
-                                        <span>Hama</span>
-                                    </a>
-                                </li>
-                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('inputData') }}" class="waves-effect">
+                                <i data-feather="database"></i>
+                                <span data-key="t-input-data">Input Data</span>
+
+                            </a>
                         </li>
 
                         <li>
-                            <a href="javascript: void(0);" class="has-arrow">
+                            <a href="{{ route('history') }}" class="waves-effect">
                                 <i data-feather="clock"></i>
-                                <span data-key="t-dashboard">Riwayat</span>
+                                <span data-key="t-history">Riwayat</span>
                             </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li>
-                                    <a href="{{ route('histori.hama') }}">
-                                        <i data-feather="clock"></i>
-                                        <span>Riwayat Hama</span>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                     @endif
                 @endauth

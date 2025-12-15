@@ -61,6 +61,7 @@ class SubKriteriaController extends Controller
     {
         $subKriteria = SubKriteria::where('kriteria_id', $id)->get();
         $matriks = [];
+        $lengkap = true;
 
         foreach ($subKriteria as $row) {
             foreach ($subKriteria as $col) {
@@ -77,6 +78,7 @@ class SubKriteriaController extends Controller
                         $matriks[$row->id][$col->id] = 1 / $nilaiKebalikan;
                     } else {
                         $matriks[$row->id][$col->id] = null;
+                        $lengkap = false;
                     }
                 }
             }
@@ -86,11 +88,13 @@ class SubKriteriaController extends Controller
         $hasil = $this->hitungBobotInternal($subkriterias);
         $konsistensi = $this->hitungKonsistensi($hasil['matriks'], $hasil['bobot']);
 
-        foreach ($hasil['bobot'] as $idSub => $nilaiBobot) {
-            SubKriteria::where('id', $idSub)->update(['bobot' => $nilaiBobot]);
+        if ($lengkap) {
+            foreach ($hasil['bobot'] as $idSub => $nilaiBobot) {
+                SubKriteria::where('id', $idSub)->update(['bobot' => $nilaiBobot]);
+            }
         }
 
-        return view('ahp.subkriteria.matrix_subKriteria', compact('subKriteria', 'matriks', 'hasil', 'konsistensi', 'id'));
+        return view('ahp.subkriteria.matrix_subKriteria', compact('subKriteria', 'matriks', 'hasil', 'konsistensi', 'id', 'lengkap'));
     }
 
     public function postMatriks(Request $request, $id)
