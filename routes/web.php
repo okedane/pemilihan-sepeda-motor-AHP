@@ -3,11 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Ahp\KriteriaController;
-use App\Http\Controllers\petani\PetaniController;
 use App\Http\Controllers\Ahp\AlternatifController;
 use App\Http\Controllers\Ahp\SubKriteriaController;
 use App\Http\Controllers\HasilPerhitunganController;

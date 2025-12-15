@@ -22,9 +22,13 @@ class AlternatifController extends Controller
     {
         try {
             $validated = $request->validate([
-                'kode'              => 'required',
                 'nama'              => 'required',
+                'harga'             => 'required|integer',
+                'deskripsi'         => 'nullable|string',
             ]);
+
+            $lastNumber = Alternatif::count() + 1;
+            $validated['kode'] = 'A' . $lastNumber;
 
             Alternatif::create($validated);
             return redirect()->back()->with('success', 'Jabatan berhasil di tambahkan');
@@ -37,8 +41,9 @@ class AlternatifController extends Controller
     {
         try {
             $validated = $request->validate([
-                'kode'              => 'required',
                 'nama'              => 'required',
+                'harga'             => 'required|integer',
+                'deskripsi'         => 'nullable|string',
             ]);
 
             $alternatif = Alternatif::findOrFail($id);
@@ -50,12 +55,30 @@ class AlternatifController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete(Alternatif $id)
     {
-        $alternatif = Alternatif::findOrFail($id);
-        $alternatif->delete();
+        try {
+            $deletedNumber = (int) str_replace('A', '', $id->kode);
 
-        return back()->with('success', 'data telah dihapus');
+            // Hapus data
+            $id->delete();
+
+            // Ambil semua data setelah kode yang dihapus
+            $updateKode = Alternatif::whereRaw('CAST(SUBSTRING(kode, 2) AS UNSIGNED) > ?', [$deletedNumber])
+                                             ->orderByRaw('CAST(SUBSTRING(kode, 2) AS UNSIGNED)')
+                                             ->get();
+
+            // Update ulang kode-kode setelahnya
+            foreach ($updateKode as $item) {
+                $currentNumber = (int) str_replace('A', '', $item->kode);
+                $newNumber = $currentNumber - 1;
+                $item->update(['kode' => 'A' . $newNumber]);
+            }
+
+            return redirect()->back()->with('success', 'Kriteria berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus Kriteria. Silakan coba lagi.');
+        }
     }
 
 

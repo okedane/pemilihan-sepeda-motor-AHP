@@ -19,9 +19,11 @@ class KriteriaController extends Controller
     {
         try {
             $validated = $request->validate([
-                'kode' => 'required',
                 'nama' => 'required',
             ]);
+
+            $lastNumber = Kriteria::count() + 1;
+            $validated['kode'] = 'C' . $lastNumber;
 
             kriteria::create($validated);
             return redirect()->back()->with('success', 'Kriteria berhasil di tambahkan');
@@ -34,7 +36,6 @@ class KriteriaController extends Controller
     {
         try {
             $validated = $request->validate([
-                'kode' => 'required',
                 'nama' => 'required',
             ]);
 
@@ -49,12 +50,30 @@ class KriteriaController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete(Kriteria $id)
     {
-        $kriteria = kriteria::findOrFail($id);
-        $kriteria->delete();
+        try {
+            $deletedNumber = (int) str_replace('C', '', $id->kode);
 
-        return back()->with('success', 'data telah dihapus');
+            // Hapus data
+            $id->delete();
+
+            // Ambil semua data setelah kode yang dihapus
+            $updateKode = Kriteria::whereRaw('CAST(SUBSTRING(kode, 2) AS UNSIGNED) > ?', [$deletedNumber])
+                                             ->orderByRaw('CAST(SUBSTRING(kode, 2) AS UNSIGNED)')
+                                             ->get();
+
+            // Update ulang kode-kode setelahnya
+            foreach ($updateKode as $item) {
+                $currentNumber = (int) str_replace('C', '', $item->kode);
+                $newNumber = $currentNumber - 1;
+                $item->update(['kode' => 'C' . $newNumber]);
+            }
+
+            return redirect()->back()->with('success', 'Kriteria berhasil dihapus.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus Kriteria. Silakan coba lagi.');
+        }
     }
 
     public function matriks()

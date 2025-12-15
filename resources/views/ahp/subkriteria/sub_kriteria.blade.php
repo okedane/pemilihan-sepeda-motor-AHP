@@ -22,11 +22,12 @@
                             <h4 class="card-title mb-0">Daftar subKriteria</h4>
 
                             <div class="d-flex gap-2 ms-auto">
-                                <a href="{{ route('matriks', $kriteria->id) }}"
-                                    class="btn btn-sm btn-outline-secondary">
-                                    <i class="mdi mdi-table me-1"></i> Matriks Subkriteria
-                                </a>
-
+                                @if (count($subKriteria) >= 2)
+                                    <a href="{{ route('matriks', $kriteria->id) }}"
+                                        class="btn btn-sm btn-outline-secondary">
+                                        <i class="mdi mdi-table me-1"></i> Matriks Subkriteria
+                                    </a>
+                                @endif
                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#myModal">
                                     <i class="mdi mdi-plus me-1"></i> Tambah subKriteria
@@ -133,17 +134,6 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-body">
-
-                                                    <!-- Nama -->
-                                                    <div class="mb-3">
-                                                        <label class="form-label" for="nama">Nama</label>
-                                                        <input type="text" class="form-control" id="nama"
-                                                            name="nama" value="{{ $item->nama }}" required>
-                                                        <div class="invalid-feedback">Nama harus
-                                                            diisi.</div>
-                                                    </div>
-
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary waves-effect"
@@ -178,37 +168,28 @@
                             novalidate>
                             @csrf
                             <div class="mb-3">
-                                <label class="form-label" for="validationCustom01">Kode</label>
+                                <label class="form-label" for="validationCustom01">Nama</label>
                                 <input type="text" class="form-control" id="validationCustom01"
-                                    placeholder="Masukan Kode" name="kode" required>
+                                    placeholder="Masukan Nama" name="nama" required>
                                 <div class="invalid-feedback">
-                                    Kode harus diisi
+                                    Nama harus diisi
                                 </div>
                             </div>
+                            <input type="hidden" name="kriteria_id" value="{{ $kriteria->id }}">
 
-                    <div class="mb-3">
-                        <label class="form-label" for="validationCustom01">Nama</label>
-                        <input type="text" class="form-control" id="validationCustom01"
-                            placeholder="Masukan Nama" name="nama" required>
-                        <div class="invalid-feedback">
-                            Nama harus diisi
-                        </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary waves-effect"
+                                    data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan
+                                    Perubahan</button>
+                            </div>
+                        </form>
+
                     </div>
-                    <input type="hidden" name="kriteria_id" value="{{ $kriteria->id }}">
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect"
-                            data-bs-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">Simpan
-                            Perubahan</button>
-                    </div>
-                    </form>
-
                 </div>
-            </div>
 
+            </div>
         </div>
-    </div>
 
 
 </x-app>

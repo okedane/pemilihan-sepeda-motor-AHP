@@ -22,9 +22,11 @@
                             <h4 class="card-title mb-0">Daftar Kriteria</h4>
 
                             <div class="d-flex gap-2 ms-auto">
-                                <a href="{{ route('kriteria.matriks') }}" class="btn btn-outline-secondary btn-sm">
-                                    <i class="mdi mdi-table me-1"></i> Matriks Perbandingan
-                                </a>
+                                @if(count($kriteria) >= 2)
+                                    <a href="{{ route('kriteria.matriks') }}" class="btn btn-outline-secondary btn-sm">
+                                        <i class="mdi mdi-table me-1"></i> Matriks Perbandingan
+                                    </a>
+                                @endif
                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#myModal">
                                     <i class="mdi mdi-plus me-1"></i> Tambah Kriteria
@@ -52,7 +54,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->kode }}</td>
                                     <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->bobot }}</td>
+                                    <td>{{ $item->bobot ?? '-' }}</td>
 
                                     <td style="text-align: center; width: 100px;">
                                         <div class="d-flex justify-content-center gap-2">
@@ -135,15 +137,6 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-body">
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label" for="nama">Code
-                                                            Kriteria</label>
-                                                        <input type="text" class="form-control" id="kode"
-                                                            name="kode" value="{{ $item->kode }}" required>
-                                                        <div class="invalid-feedback">Code harus
-                                                            diisi.</div>
-                                                    </div>
                                                     <!-- Nama -->
                                                     <div class="mb-3">
                                                         <label class="form-label" for="nama">Nama</label>
@@ -152,10 +145,6 @@
                                                         <div class="invalid-feedback">Nama harus
                                                             diisi.</div>
                                                     </div>
-
-
-
-
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary waves-effect"
@@ -188,14 +177,6 @@
                 <div class="modal-body">
                     <form class="needs-validation" action="{{ route('kriteria.post') }}" method="POST" novalidate>
                         @csrf
-                        <div class="mb-3">
-                            <label class="form-label" for="validationCustom01">Code</label>
-                            <input type="text" class="form-control" id="validationCustom01"
-                                placeholder="Masukan Code" name="kode" required>
-                            <div class="invalid-feedback">
-                                Code harus diisi
-                            </div>
-                        </div>
                         <div class="mb-3">
                             <label class="form-label" for="validationCustom01">Nama</label>
                             <input type="text" class="form-control" id="validationCustom01"

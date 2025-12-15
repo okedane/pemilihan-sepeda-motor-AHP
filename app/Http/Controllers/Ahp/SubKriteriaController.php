@@ -22,9 +22,13 @@ class SubKriteriaController extends Controller
         try {
             $validated = $request->validate([
                 'kriteria_id' => 'required',
-                'kode' => 'required',
                 'nama' => 'required',
             ]);
+
+            // Hitung jumlah subkriteria dengan kriteria_id yang sama
+            $count = SubKriteria::where('kriteria_id', $validated['kriteria_id'])->count() + 1;
+            $validated['kode'] = 'S' . $count;
+
             SubKriteria::create($validated);
             return redirect()->back()->with('success', 'subKriteria berhasil di tambahkan');
         } catch (\Throwable $th) {
@@ -49,12 +53,31 @@ class SubKriteriaController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete(SubKriteria $id)
     {
-        $subKriteria = SubKriteria::findOrFail($id);
-        $subKriteria->delete();
+        try {
+            $deletedNumber = (int) str_replace('S', '', $id->kode);
 
-        return back()->with('success', 'data telah dihapus');
+            // Hapus data
+            $id->delete();
+
+            // Ambil semua data setelah kode yang dihapus
+            $updateKode = SubKriteria::where('kriteria_id', $id->kriteria_id)
+            ->whereRaw('CAST(SUBSTRING(kode, 2) AS UNSIGNED) > ?', [$deletedNumber])
+            ->orderByRaw('CAST(SUBSTRING(kode, 2) AS UNSIGNED)')
+            ->get();
+
+            // Update ulang kode-kode setelahnya
+            foreach ($updateKode as $item) {
+            $currentNumber = (int) str_replace('S', '', $item->kode);
+            $newNumber = $currentNumber - 1;
+            $item->update(['kode' => 'S' . $newNumber]);
+            }
+
+            return redirect()->back()->with('success', 'SubKriteria berhasil dihapus.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus SubKriteria. Silakan coba lagi.' . $th->getMessage());
+        }
     }
 
     public function matriks($id)

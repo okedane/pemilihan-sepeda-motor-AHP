@@ -22,9 +22,12 @@
                             <h4 class="card-title mb-0">Daftar alternatif</h4>
 
                             <div class="d-flex gap-2 ms-auto">
-                                <a href="{{ route('alternatif.penilaian.form') }}" class="btn btn-outline-secondary btn-sm">
-                                    <i class="mdi mdi-table me-1"></i> Penilaian Alternatif
-                                </a>
+                                @if (count($alternatif) >= 2)
+                                    <a href="{{ route('alternatif.penilaian.form') }}"
+                                        class="btn btn-outline-secondary btn-sm">
+                                        <i class="mdi mdi-table me-1"></i> Penilaian Alternatif
+                                    </a>
+                                @endif
                                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#myModal">
                                     <i class="mdi mdi-plus me-1"></i> Tambah alternatif
@@ -41,7 +44,9 @@
                             <tr>
                                 <th style="width:20px">No</th>
                                 <th>Kode</th>
-                                <th>Nama</th>
+                                <th style="width: 250px;">Nama</th>
+                                <th style="width: 130px;">Harga</th>
+                                <th>Deskripsi</th>
                                 <th style="text-align: center; width: 100px;" class="no-export">Action</th>
                             </tr>
                         </thead>
@@ -51,6 +56,8 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->kode }}</td>
                                     <td>{{ $item->nama }}</td>
+                                    <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
+                                    <td>{{ $item->deskripsi }}</td>
 
                                     <td style="text-align: center; width: 100px;">
                                         <div class="d-flex justify-content-center gap-2">
@@ -119,7 +126,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="editModalLabel">Edit
-                                                    Data alternatif</h5>
+                                                    Data Alternatif</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -129,15 +136,6 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="modal-body">
-
-                                                    <div class="mb-3">
-                                                        <label class="form-label" for="nama">Code
-                                                            alternatif</label>
-                                                        <input type="text" class="form-control" id="kode"
-                                                            name="kode" value="{{ $item->kode }}" required>
-                                                        <div class="invalid-feedback">Code harus
-                                                            diisi.</div>
-                                                    </div>
                                                     <!-- Nama -->
                                                     <div class="mb-3">
                                                         <label class="form-label" for="nama">Nama</label>
@@ -146,10 +144,22 @@
                                                         <div class="invalid-feedback">Nama harus
                                                             diisi.</div>
                                                     </div>
-
-
-
-
+                                                    <!-- Harga -->
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="harga">Harga</label>
+                                                        <input type="number" class="form-control" id="harga"
+                                                            name="harga" value="{{ $item->harga }}" required>
+                                                        <div class="invalid-feedback">Harga harus
+                                                            diisi.</div>
+                                                    </div>
+                                                    <!-- Deskripsi -->
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="deskripsi">Deskripsi</label>
+                                                        <textarea class="form-control" id="deskripsi" name="deskripsi" rows="1" style="overflow:hidden; resize:none;" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'">{{ $item->deskripsi }}</textarea>
+                                                        <div class="invalid-feedback">
+                                                            Deskripsi harus diisi
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary waves-effect"
@@ -177,21 +187,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">alternatif</h5>
+                    <h5 class="modal-title" id="myModalLabel">Alternatif</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form class="needs-validation" action="{{ route('alternatif.post') }}" method="POST"
                         novalidate>
                         @csrf
-                        <div class="mb-3">
-                            <label class="form-label" for="validationCustom01">Code</label>
-                            <input type="text" class="form-control" id="validationCustom01"
-                                placeholder="Masukan Code" name="kode" required>
-                            <div class="invalid-feedback">
-                                Code harus diisi
-                            </div>
-                        </div>
                         <div class="mb-3">
                             <label class="form-label" for="validationCustom01">Nama</label>
                             <input type="text" class="form-control" id="validationCustom01"
@@ -200,8 +202,21 @@
                                 Nama harus diisi
                             </div>
                         </div>
-
-
+                        <div class="mb-3">
+                            <label class="form-label" for="validationCustom02">Harga</label>
+                            <input type="number" class="form-control" id="validationCustom02"
+                                placeholder="Masukan Harga" name="harga" required>
+                            <div class="invalid-feedback">
+                                Harga harus diisi
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="validationCustom03">Deskripsi</label>
+                            <textarea class="form-control" id="validationCustom03" placeholder="Masukan Deskripsi" name="deskripsi" rows="1" style="overflow:hidden; resize:none;" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+                            <div class="invalid-feedback">
+                                Deskripsi harus diisi
+                            </div>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary waves-effect"
                                 data-bs-dismiss="modal">Tutup</button>

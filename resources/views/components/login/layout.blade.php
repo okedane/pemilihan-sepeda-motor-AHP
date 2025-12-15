@@ -27,11 +27,13 @@
 
     <style>
         body {
-            background-color: #E40521 !important; /* background merah */
+            background-color: #E40521 !important;
+            /* background merah */
         }
 
         .login-wrapper {
-            background-color: #E40521 !important; /* full merah */
+            background-color: #E40521 !important;
+            /* full merah */
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -39,7 +41,8 @@
         }
 
         .login-card {
-            background-color: #d9d9d9; /* abu seperti gambar */
+            background-color: #d9d9d9;
+            /* abu seperti gambar */
             padding: 40px;
             border-radius: 20px;
         }
@@ -82,34 +85,17 @@
     <script src="{{ asset('assets/js/pages/pass-addon.init.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            $("#show_hide_password a").on('click', function(event) {
-                event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("bi-eye-slash-fill");
-                    $('#show_hide_password i').removeClass("bi-eye-fill");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("bi-eye-slash-fill");
-                    $('#show_hide_password i').addClass("bi-eye-fill");
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            $("#show_hide_password1 a").on('click', function(event) {
-                event.preventDefault();
-                if ($('#show_hide_password1 input').attr("type") == "text") {
-                    $('#show_hide_password1 input').attr('type', 'password');
-                    $('#show_hide_password1 i').addClass("bi-eye-slash-fill");
-                    $('#show_hide_password1 i').removeClass("bi-eye-fill");
-                } else if ($('#show_hide_password1 input').attr("type") == "password") {
-                    $('#show_hide_password1 input').attr('type', 'text');
-                    $('#show_hide_password1 i').removeClass("bi-eye-slash-fill");
-                    $('#show_hide_password1 i').addClass("bi-eye-fill");
-                }
-            });
+        document.getElementById('password-confirmation-addon').addEventListener('click', function() {
+            const input = document.getElementById('password_confirmation');
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.firstElementChild.classList.remove('mdi-eye-outline');
+                this.firstElementChild.classList.add('mdi-eye-off-outline');
+            } else {
+                input.type = 'password';
+                this.firstElementChild.classList.remove('mdi-eye-off-outline');
+                this.firstElementChild.classList.add('mdi-eye-outline');
+            }
         });
     </script>
 

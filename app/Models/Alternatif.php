@@ -9,7 +9,7 @@ class Alternatif extends Model
 {
     use HasFactory;
     protected $table = 'alternatif';
-    protected $fillable = ['kode', 'nama'];
+    protected $fillable = ['kode', 'nama', 'harga', 'deskripsi'];
     public function penilaian()
     {
         return $this->hasMany(PerbandinganAlternatif::class, 'alternatif_id');

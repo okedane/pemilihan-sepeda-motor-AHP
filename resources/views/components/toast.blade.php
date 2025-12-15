@@ -5,7 +5,7 @@
             @elseif(session('error')) bg-danger text-white
             @elseif($errors->any()) bg-warning text-dark
             @endif">
-            <img src="{{ asset('assets/images/logo-sm.svg') }}" alt="" class="me-2" height="18">
+            <img src="{{ asset('assets/images/logo-honda.png') }}" alt="" class="me-2" height="18">
             <strong class="me-auto">Astra Honda Motor</strong>
             <small class="text-muted">Just now</small>
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
