@@ -135,9 +135,9 @@
                                     <i class="fas fa-download text-success mb-3" style="font-size: 2rem;"></i>
                                     <h6 class="fw-bold">Simpan Hasil</h6>
                                     <p class="text-muted small mb-3">Download hasil rekomendasi dalam format PDF</p>
-                                    <button class="btn btn-outline-success btn-sm" onclick="window.print()">
-                                        <i class="fas fa-file-pdf me-1"></i>Download PDF
-                                    </button>
+                                    <a href="{{ route('hasil.export', ['id' => $analisis_id ?? null]) }}" class="btn btn-outline-success btn-sm">
+                                        <i class="fas fa-file-pdf me-1"></i>Export PDF
+                                    </a>
                                 </div>
                             </div>
                         </div>

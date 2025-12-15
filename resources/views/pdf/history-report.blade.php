@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Laporan Riwayat Analisis Motor Honda</title>
@@ -187,18 +188,26 @@
         }
     </style>
 </head>
+
 <body>
+
+
+    <div class="logo">
+        <img src="{{ public_path('assets/images/logo-honda.png') }}" alt="Honda Logo" style="height:48px;">
+    </div>
+
     <!-- Header -->
     <div class="header">
         <h1>Laporan Riwayat Analisis Motor Honda</h1>
         <h2>Sistem Pendukung Keputusan Metode AHP</h2>
-        <p>CV. Sinar Baru</p>
+        <p>CV. Sinar Baru | JL. Trunojoyo 290B Gedungan Sumenep </p>
     </div>
 
     <!-- Info Box -->
     <div class="info-box">
         <p><strong>Tanggal Cetak:</strong> {{ $tanggal_cetak }}</p>
-        <p><strong>Periode Data:</strong> {{ $histories->min('created_at')?->format('d M Y') }} - {{ $histories->max('created_at')?->format('d M Y') }}</p>
+        <p><strong>Periode Data:</strong> {{ $histories->min('created_at')?->format('d M Y') }} -
+            {{ $histories->max('created_at')?->format('d M Y') }}</p>
     </div>
 
     <!-- Statistics -->
@@ -225,7 +234,7 @@
     <div class="section-title">RIWAYAT ANALISIS PER USER</div>
 
     <!-- Data per User -->
-    @foreach($groupedByUser as $userId => $userHistories)
+    @foreach ($groupedByUser as $userId => $userHistories)
         @php
             $user = $userHistories->first()->user;
         @endphp
@@ -249,7 +258,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($userHistories->sortByDesc('created_at') as $history)
+                    @foreach ($userHistories->sortByDesc('created_at') as $history)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $history->created_at->format('d M Y - H:i') }} WIB</td>
@@ -263,15 +272,17 @@
             </table>
         </div>
 
-        @if(!$loop->last && $loop->iteration % 3 == 0)
+        @if (!$loop->last && $loop->iteration % 3 == 0)
             <div class="page-break"></div>
         @endif
     @endforeach
 
     <!-- Footer -->
     <div class="footer">
-        <p>Dokumen ini dicetak secara otomatis oleh Sistem Pendukung Keputusan Pemilihan Motor Honda - CV. Sinar Baru</p>
+        <p>Dokumen ini dicetak secara otomatis oleh Sistem Pendukung Keputusan Pemilihan Motor Honda - CV. Sinar Baru
+        </p>
         <p>Halaman {PAGE_NUM} dari {PAGE_COUNT}</p>
     </div>
 </body>
+
 </html>

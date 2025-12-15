@@ -227,14 +227,14 @@
 <body>
     <!-- Logo -->
     <div class="logo">
-        <div class="icon">🏍️</div>
+        <img src="{{ public_path('assets/images/logo-honda.png') }}" alt="Honda Logo" style="height:48px;">
     </div>
 
     <!-- Header -->
     <div class="header">
         <h1>Laporan Analisis Motor Honda</h1>
         <h2>Sistem Pendukung Keputusan Metode AHP</h2>
-        <p>CV. Sinar Baru</p>
+        <p>CV. Sinar Baru | JL. Trunojoyo 290B Gedungan Sumenep </p>
     </div>
 
     <!-- User Info -->
@@ -249,17 +249,17 @@
     <!-- Statistics -->
     <div class="statistics">
         <div class="stat-item">
-            <div class="icon">🏆</div>
+            {{-- <div class="icon">🏆</div> --}}
             <div class="label">Motor Favorit</div>
             <div class="value">{{ $statistics['motor_favorit'] }}</div>
         </div>
         <div class="stat-item">
-            <div class="icon">⭐</div>
+            {{-- <div class="icon">⭐</div> --}}
             <div class="label">Skor Tertinggi</div>
             <div class="value">{{ $statistics['skor_tertinggi'] }}</div>
         </div>
         <div class="stat-item">
-            <div class="icon">📅</div>
+            {{-- <div class="icon">📅</div> --}}
             <div class="label">Terakhir Analisis</div>
             <div class="value" style="font-size: 12px;">{{ $statistics['terakhir_analisis'] }}</div>
         </div>

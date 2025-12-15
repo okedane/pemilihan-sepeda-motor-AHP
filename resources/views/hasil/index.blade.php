@@ -130,9 +130,6 @@
                                         class="btn btn-danger btn-sm me-2">
                                         <i class="fas fa-file-pdf me-1"></i>Export PDF
                                     </a>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-file-excel me-1"></i>Export Excel
-                                    </button>
                                 </div>
                             </div>
                         </div>

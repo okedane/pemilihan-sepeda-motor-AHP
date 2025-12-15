@@ -78,6 +78,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pilih', [PilihanController::class, 'pilih'])->name('data.pilih');
         Route::get('/history', [UserHistoryController::class, 'history'])->name('history');
 
+        // Export PDF untuk user sendiri
+        Route::get('/export-my-history-pdf', [PdfController::class, 'exportMyHistoryPdf'])
+            ->name('user.export.history.pdf');
+
+        // Export PDF hasil rekomendasi individual
+        Route::get('/export-hasil-pdf/{id}', [PdfController::class, 'exportHasilPdf'])
+            ->name('hasil.export');
+
         Route::get('/create akun', function () {
             return view('ahli.dashboard');
         });

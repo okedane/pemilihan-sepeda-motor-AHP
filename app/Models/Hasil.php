@@ -15,6 +15,7 @@ class Hasil extends Model
         'sub_kriteria_ids',
         'alternatif_id',
         'skor',
+        'tanggal',
     ];
     protected $casts = [
         'sub_kriteria_ids' => 'array',

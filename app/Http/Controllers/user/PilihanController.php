@@ -112,7 +112,7 @@ class PilihanController extends Controller
         $terbaik = $hasil[0];
 
 
-        Hasil::create([
+        $hasilRecord = Hasil::create([
             'user_id' => $userId,
             'sub_kriteria_ids' => json_encode($subKriteriaIds),
             'alternatif_id' => $terbaik['alternatif_id'],
@@ -120,6 +120,8 @@ class PilihanController extends Controller
             'tanggal' => now(),
         ]);
 
-        return view('user.hasil', compact('hasil', 'terbaik'));
+        $analisis_id = $hasilRecord->id;
+
+        return view('user.hasil', compact('hasil', 'terbaik', 'analisis_id'));
     }
 }
