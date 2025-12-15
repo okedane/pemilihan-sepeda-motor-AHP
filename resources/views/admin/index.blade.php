@@ -157,12 +157,12 @@
                                                 Honda</h4>
                                             <div class="ms-auto">
                                                 <select id="tahun" class="form-select form-select-sm w-auto">
-                                                    {{-- @foreach ($tahunList as $tahun)
+                                                    @foreach ($tahunList as $tahun)
                                                         <option value="{{ $tahun }}"
                                                             {{ $tahun == $tahunTerpilih ? 'selected' : '' }}>
                                                             {{ $tahun }}
                                                         </option>
-                                                    @endforeach --}}
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

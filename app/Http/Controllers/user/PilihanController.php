@@ -117,6 +117,7 @@ class PilihanController extends Controller
             'sub_kriteria_ids' => json_encode($subKriteriaIds),
             'alternatif_id' => $terbaik['alternatif_id'],
             'skor' => $terbaik['skor'],
+            'tanggal' => now(),
         ]);
 
         return view('user.hasil', compact('hasil', 'terbaik'));

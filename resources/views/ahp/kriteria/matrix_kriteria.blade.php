@@ -9,7 +9,7 @@
                         <h4 class="mb-0 font-size-18">Matriks Perbandingan Kriteria</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="#">Kriteria</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('kriteria.index') }}">Kriteria</a></li>
                                 <li class="breadcrumb-item active">Matriks</li>
                             </ol>
                         </div>
@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="card-title mb-0">Matriks Perbandingan Kriteria</h4>
-                        <a href="{{ route('kriteria.index') }}" class="btn btn-outline-secondary btn-sm">← Kembali</a>
+                        {{-- <a href="{{ route('kriteria.index') }}" class="btn btn-outline-secondary btn-sm">← Kembali</a> --}}
                     </div>
                     <div class="card-body p-4">
                         <div class="table-responsive">

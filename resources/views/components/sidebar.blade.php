@@ -17,15 +17,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('alternatif.index') }}" class="waves-effect">
-                                <i data-feather="layers"></i>
-                                <span data-key="t-dashboard">Alternatif</span>
-                            </a>
-                        </li>
-                        <li>
                             <a href="{{ route('kriteria.index') }}" class="waves-effect">
                                 <i data-feather="sliders"></i>
                                 <span data-key="t-dashboard">Kriteria</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('alternatif.index') }}" class="waves-effect">
+                                <i data-feather="layers"></i>
+                                <span data-key="t-dashboard">Alternatif</span>
                             </a>
                         </li>
                         <li>

@@ -11,7 +11,8 @@
                             <h4 class="mb-1 font-size-18 fw-bold">
                                 <i class="fas fa-history text-danger me-2"></i>Riwayat Hasil Perhitungan AHP
                             </h4>
-                            <p class="text-muted mb-0 small">Monitoring semua analisis pemilihan motor dari seluruh pengguna</p>
+                            <p class="text-muted mb-0 small">Monitoring semua analisis pemilihan motor dari seluruh
+                                pengguna</p>
                         </div>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
@@ -84,7 +85,8 @@
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <p class="text-muted mb-1 small">Motor Terpopuler</p>
-                                    <h6 class="mb-0 fw-bold text-truncate">{{ $histories->first()?->alternatif->nama ?? '-' }}</h6>
+                                    <h6 class="mb-0 fw-bold text-truncate">
+                                        {{ $histories->first()?->alternatif->nama ?? '-' }}</h6>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +105,8 @@
                                 </div>
                                 <div class="flex-grow-1 ms-3">
                                     <p class="text-muted mb-1 small">Hari Ini</p>
-                                    <h4 class="mb-0 fw-bold">{{ $histories->where('created_at', '>=', today())->count() }}</h4>
+                                    <h4 class="mb-0 fw-bold">
+                                        {{ $histories->where('created_at', '>=', today())->count() }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -144,8 +147,8 @@
 
                                 <!-- User Header (Clickable) -->
                                 <div class="user-header border-bottom p-3 cursor-pointer"
-                                     onclick="toggleUserDetails({{ $userId }})"
-                                     style="transition: background-color 0.2s;">
+                                    onclick="toggleUserDetails({{ $userId }})"
+                                    style="transition: background-color 0.2s;">
                                     <div class="row align-items-center">
                                         <div class="col-md-1 text-center">
                                             <span class="badge badge-soft-secondary rounded-pill fs-6">
@@ -169,7 +172,8 @@
                                         </div>
                                         <div class="col-md-3 text-center">
                                             <span class="badge bg-danger-subtle text-danger fs-6 fw-bold px-3 py-2">
-                                                <i class="fas fa-chart-bar me-1"></i>{{ $userHistories->count() }} Analisis
+                                                <i class="fas fa-chart-bar me-1"></i>{{ $userHistories->count() }}
+                                                Analisis
                                             </span>
                                         </div>
                                         <div class="col-md-3 text-center">
@@ -179,20 +183,23 @@
                                             </small>
                                         </div>
                                         <div class="col-md-1 text-end">
-                                            <i class="fas fa-chevron-down text-muted expand-icon" id="icon-{{ $userId }}"></i>
+                                            <i class="fas fa-chevron-down text-muted expand-icon"
+                                                id="icon-{{ $userId }}"></i>
                                         </div>
                                     </div>
                                 </div>
 
                                 <!-- User Details (Hidden by default) -->
-                                <div class="user-details bg-light" id="details-{{ $userId }}" style="display: none;">
+                                <div class="user-details bg-light" id="details-{{ $userId }}"
+                                    style="display: none;">
                                     <div class="p-4">
                                         <!-- Statistics Row -->
                                         <div class="row mb-4">
                                             <div class="col-md-4">
                                                 <div class="card border-0 bg-white">
                                                     <div class="card-body text-center p-3">
-                                                        <i class="fas fa-trophy text-danger mb-2" style="font-size: 1.5rem;"></i>
+                                                        <i class="fas fa-trophy text-danger mb-2"
+                                                            style="font-size: 1.5rem;"></i>
                                                         <h6 class="fw-bold mb-1 small">Motor Favorit</h6>
                                                         <p class="mb-0 text-dark fw-semibold small">
                                                             {{ $userHistories->groupBy('alternatif_id')->sortByDesc(fn($group) => $group->count())->keys()->first() ? $userHistories->firstWhere('alternatif_id', $userHistories->groupBy('alternatif_id')->sortByDesc(fn($group) => $group->count())->keys()->first())->alternatif->nama : '-' }}
@@ -203,7 +210,8 @@
                                             <div class="col-md-4">
                                                 <div class="card border-0 bg-white">
                                                     <div class="card-body text-center p-3">
-                                                        <i class="fas fa-star text-success mb-2" style="font-size: 1.5rem;"></i>
+                                                        <i class="fas fa-star text-success mb-2"
+                                                            style="font-size: 1.5rem;"></i>
                                                         <h6 class="fw-bold mb-1 small">Skor Tertinggi</h6>
                                                         <p class="mb-0 text-dark fw-semibold small">
                                                             {{ number_format($userHistories->max('skor'), 3) }}
@@ -214,7 +222,8 @@
                                             <div class="col-md-4">
                                                 <div class="card border-0 bg-white">
                                                     <div class="card-body text-center p-3">
-                                                        <i class="fas fa-chart-line text-info mb-2" style="font-size: 1.5rem;"></i>
+                                                        <i class="fas fa-chart-line text-info mb-2"
+                                                            style="font-size: 1.5rem;"></i>
                                                         <h6 class="fw-bold mb-1 small">Rata-rata Skor</h6>
                                                         <p class="mb-0 text-dark fw-semibold small">
                                                             {{ number_format($userHistories->avg('skor'), 3) }}
@@ -235,34 +244,46 @@
                                                         <th class="px-3 py-2" style="width: 50px;">No</th>
                                                         <th class="px-3 py-2">Tanggal & Waktu</th>
                                                         <th class="px-3 py-2">Motor Rekomendasi</th>
-                                                        <th class="px-3 py-2 text-center" style="width: 120px;">Skor AHP</th>
+                                                        <th class="px-3 py-2 text-center" style="width: 120px;">Skor
+                                                            AHP</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($userHistories->sortByDesc('created_at') as $history)
                                                         <tr>
                                                             <td class="px-3 py-2 text-center">
-                                                                <span class="badge bg-secondary">{{ $loop->iteration }}</span>
+                                                                <span
+                                                                    class="badge bg-secondary">{{ $loop->iteration }}</span>
                                                             </td>
                                                             <td class="px-3 py-2">
                                                                 <div class="d-flex align-items-center">
                                                                     <i class="far fa-calendar text-muted me-2"></i>
                                                                     <div>
-                                                                        <div class="fw-medium small">{{ $history->created_at->format('d M Y') }}</div>
-                                                                        <small class="text-muted" style="font-size: 0.75rem;">{{ $history->created_at->format('H:i') }} WIB</small>
+                                                                        <div class="fw-medium small">
+                                                                            {{ $history->created_at->format('d M Y') }}
+                                                                        </div>
+                                                                        <small class="text-muted"
+                                                                            style="font-size: 0.75rem;">{{ $history->created_at->format('H:i') }}
+                                                                            WIB</small>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                             <td class="px-3 py-2">
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="avatar-xs me-2">
-                                                                        <div class="avatar-title rounded-circle bg-danger bg-opacity-10">
-                                                                            <i class="fas fa-motorcycle text-danger"></i>
+                                                                        <div
+                                                                            class="avatar-title rounded-circle bg-danger bg-opacity-10">
+                                                                            <i
+                                                                                class="fas fa-motorcycle text-danger"></i>
                                                                         </div>
                                                                     </div>
                                                                     <div>
-                                                                        <div class="fw-semibold text-dark small">{{ $history->alternatif->nama ?? '-' }}</div>
-                                                                        <small class="text-muted" style="font-size: 0.7rem;">Motor Honda</small>
+                                                                        <div class="fw-semibold text-dark small">
+                                                                            {{ $history->alternatif->nama ?? '-' }}
+                                                                        </div>
+                                                                        <small class="text-muted"
+                                                                            style="font-size: 0.7rem;">Motor
+                                                                            Honda</small>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -284,7 +305,8 @@
                                         <i class="fas fa-inbox text-muted" style="font-size: 3rem;"></i>
                                     </div>
                                     <h5 class="text-muted">Belum Ada Riwayat Perhitungan</h5>
-                                    <p class="text-muted mb-0">Data riwayat akan muncul setelah user melakukan analisis</p>
+                                    <p class="text-muted mb-0">Data riwayat akan muncul setelah user melakukan analisis
+                                    </p>
                                 </div>
                             @endforelse
                         </div>
@@ -402,13 +424,17 @@
                 padding: 0.25rem 0.5rem;
             }
 
-            .user-header .row > div {
+            .user-header .row>div {
                 margin-bottom: 0.5rem;
             }
         }
 
         @media print {
-            .btn, .page-title-right, .card-header .text-end, .expand-icon {
+
+            .btn,
+            .page-title-right,
+            .card-header .text-end,
+            .expand-icon {
                 display: none !important;
             }
 

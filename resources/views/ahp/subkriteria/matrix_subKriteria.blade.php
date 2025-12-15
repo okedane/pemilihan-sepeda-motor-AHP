@@ -9,6 +9,7 @@
                         <h4 class="mb-0 font-size-18">Matriks Perbandingan Subkriteria</h4>
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{ route('kriteria.index') }}">Kriteria</a></li>
                                 <li class="breadcrumb-item"><a href="{{ route('subKriteria.index', $id) }}">SubKriteria</a></li>
                                 <li class="breadcrumb-item active">Matriks</li>
                             </ol>

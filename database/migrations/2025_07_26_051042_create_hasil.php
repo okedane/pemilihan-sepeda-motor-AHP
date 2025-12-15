@@ -17,6 +17,7 @@ return new class extends Migration
             $table->json('sub_kriteria_ids');
             $table->foreignId('alternatif_id')->constrained('alternatif')->onDelete('cascade');
             $table->decimal('skor');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
