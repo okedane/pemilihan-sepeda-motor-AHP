@@ -11,6 +11,7 @@ use App\Http\Controllers\petani\PetaniController;
 use App\Http\Controllers\Ahp\AlternatifController;
 use App\Http\Controllers\Ahp\SubKriteriaController;
 use App\Http\Controllers\HasilPerhitunganController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\user\HistoryController as UserHistoryController;
 use App\Http\Controllers\user\PilihanController;
 
@@ -54,6 +55,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/penilaian-alternatif', [AlternatifController::class, 'simpanPenilaian'])->name('alternatif.penilaian.simpan');
 
         Route::get('HasilPerhitungan', [HasilPerhitunganController::class, 'index'])->name('hasil.index');
+
+         Route::get('/admin/export-history-pdf', [PdfController::class, 'exportHistoryPdf'])
+        ->name('admin.export.history.pdf');
+
+    // Export PDF per user
+    Route::get('/admin/export-history-pdf/{userId}', [PdfController::class, 'exportHistoryPdfByUser'])
+        ->name('admin.export.history.user.pdf');
 
         Route::get('/management-account-admin', [AdminController::class, 'admin'])->name('akun.admin');
         Route::get('/management-account-user', [AdminController::class, 'user'])->name('akun.user');
