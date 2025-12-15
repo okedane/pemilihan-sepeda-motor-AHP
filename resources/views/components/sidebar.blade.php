@@ -50,7 +50,7 @@
                 @auth
                     @if (auth()->user()->role === 'user')
                         <li>
-                            <a href="{{ route('dashboard') }}" class="waves-effect">
+                            <a href="{{ route('welcome') }}" class="waves-effect">
                                 <i data-feather="home"></i>
                                 <span data-key="t-dashboard">Dashboard</span>
                             </a>
