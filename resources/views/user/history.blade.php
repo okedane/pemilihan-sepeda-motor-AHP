@@ -97,6 +97,11 @@
                                     </h5>
                                 </div>
                                 <div class="col-md-6 text-end">
+                                    @if($riwayats->count() > 0)
+                                    <a href="{{ route('user.export.history.pdf') }}" class="btn btn-danger btn-sm me-2">
+                                        <i class="fas fa-file-pdf me-1"></i>Export PDF
+                                    </a>
+                                    @endif
                                     <a href="{{ route('inputData') }}" class="btn btn-danger btn-sm">
                                         <i class="fas fa-plus me-1"></i>Analisis Baru
                                     </a>
@@ -189,7 +194,7 @@
                                     </div>
                                     <h5 class="text-muted mb-2">Belum Ada Riwayat</h5>
                                     <p class="text-muted mb-4">Anda belum melakukan analisis pemilihan motor</p>
-                                    <a href="{{ route('petani.input.gejala') }}" class="btn btn-danger">
+                                    <a href="{{ route('inputData') }}" class="btn btn-danger">
                                         <i class="fas fa-plus me-2"></i>Mulai Analisis Sekarang
                                     </a>
                                 </div>
@@ -298,9 +303,6 @@
                     <div class="modal-footer border-0 bg-light">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             <i class="fas fa-times me-1"></i>Tutup
-                        </button>
-                        <button type="button" class="btn btn-danger" onclick="window.print()">
-                            <i class="fas fa-print me-1"></i>Cetak
                         </button>
                     </div>
                 </div>

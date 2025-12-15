@@ -126,12 +126,10 @@
                                     </h5>
                                 </div>
                                 <div class="col-md-6 text-end">
-                                    <button class="btn btn-success btn-sm me-2" onclick="window.print()">
-                                        <i class="fas fa-print me-1"></i>Cetak
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-file-excel me-1"></i>Export Excel
-                                    </button>
+                                    <a href="{{ route('admin.export.history.pdf') }}"
+                                        class="btn btn-danger btn-sm me-2">
+                                        <i class="fas fa-file-pdf me-1"></i>Export PDF
+                                    </a>
                                 </div>
                             </div>
                         </div>

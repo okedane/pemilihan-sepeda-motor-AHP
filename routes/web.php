@@ -9,6 +9,7 @@ use App\Http\Controllers\Ahp\KriteriaController;
 use App\Http\Controllers\Ahp\AlternatifController;
 use App\Http\Controllers\Ahp\SubKriteriaController;
 use App\Http\Controllers\HasilPerhitunganController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\user\HistoryController as UserHistoryController;
 use App\Http\Controllers\user\PilihanController;
 
@@ -53,6 +54,13 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('HasilPerhitungan', [HasilPerhitunganController::class, 'index'])->name('hasil.index');
 
+         Route::get('/admin/export-history-pdf', [PdfController::class, 'exportHistoryPdf'])
+        ->name('admin.export.history.pdf');
+
+    // Export PDF per user
+    Route::get('/admin/export-history-pdf/{userId}', [PdfController::class, 'exportHistoryPdfByUser'])
+        ->name('admin.export.history.user.pdf');
+
         Route::get('/management-account-admin', [AdminController::class, 'admin'])->name('akun.admin');
         Route::get('/management-account-user', [AdminController::class, 'user'])->name('akun.user');
         Route::post('/management-account', [AdminController::class, 'store'])->name('akun.store');
@@ -67,6 +75,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/simpan-data', [PilihanController::class, 'simpan'])->name('data.store');
         Route::get('/pilih', [PilihanController::class, 'pilih'])->name('data.pilih');
         Route::get('/history', [UserHistoryController::class, 'history'])->name('history');
+
+        // Export PDF untuk user sendiri
+        Route::get('/export-my-history-pdf', [PdfController::class, 'exportMyHistoryPdf'])
+            ->name('user.export.history.pdf');
+
+        // Export PDF hasil rekomendasi individual
+        Route::get('/export-hasil-pdf/{id}', [PdfController::class, 'exportHasilPdf'])
+            ->name('hasil.export');
 
         Route::get('/create akun', function () {
             return view('ahli.dashboard');
