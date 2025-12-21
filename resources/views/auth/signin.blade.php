@@ -9,7 +9,7 @@
 
             <!-- Judul besar seperti gambar -->
             <div class="title-app">
-                APLIKASI SISTEM KPENDUKUNG KEPUTUSAN<br>
+                APLIKASI SISTEM PENDUKUNG KEPUTUSAN<br>
                 PEMILIHAN SEPEDA MOTOR
             </div>
 
